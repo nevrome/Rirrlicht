@@ -1,0 +1,26 @@
+Package: Rirrlicht
+Type: Package
+Title: Rirrlicht
+Version: 0.0.1
+Authors@R: c(
+  person("Clemens", "Schmid", email = "clemens@nevrome.de", role = c("cre", "cph", "aut"))
+  )
+Maintainer: Clemens Schmid <clemens@nevrome.de>
+Description: Rirrlicht
+Date: 2016-09-18
+License: GPL-2
+LazyData: TRUE
+RoxygenNote: 5.0.1
+Imports:
+    Rcpp (>= 0.12.7)
+Suggests:
+    devtools (>= 1.12.0),
+    knitr,
+    magrittr (>= 1.5),
+    rmarkdown (>= 1.0),
+    roxygen2 (>= 5.0.1),
+    testthat (>= 1.0.2)
+VignetteBuilder: knitr
+Depends:
+    R (>= 3.3.0)
+LinkingTo: Rcpp
