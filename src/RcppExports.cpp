@@ -5,6 +5,21 @@
 
 using namespace Rcpp;
 
+// irrscatter
+bool irrscatter(NumericVector x, NumericVector y, NumericVector z, NumericVector size, char driverselect);
+RcppExport SEXP Rirrlicht_irrscatter(SEXP xSEXP, SEXP ySEXP, SEXP zSEXP, SEXP sizeSEXP, SEXP driverselectSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type y(ySEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type z(zSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type size(sizeSEXP);
+    Rcpp::traits::input_parameter< char >::type driverselect(driverselectSEXP);
+    rcpp_result_gen = Rcpp::wrap(irrscatter(x, y, z, size, driverselect));
+    return rcpp_result_gen;
+END_RCPP
+}
 // testirr1
 DataFrame testirr1(char driverselect);
 RcppExport SEXP Rirrlicht_testirr1(SEXP driverselectSEXP) {

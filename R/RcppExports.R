@@ -11,6 +11,23 @@
 #' @return test
 #'
 #' @examples
+#' irrscatter(x = rnorm(500)*200, y = rnorm(500)*200, z = rnorm(500)*200, size = rnorm(500)*10, driverselect = "a")
+#'
+#' @export
+irrscatter <- function(x, y, z, size, driverselect) {
+    .Call('Rirrlicht_irrscatter', PACKAGE = 'Rirrlicht', x, y, z, size, driverselect)
+}
+
+#' test
+#'
+#' @description
+#' test
+#'
+#' @param driverselect
+#'
+#' @return test
+#'
+#' @examples
 #' 1+1
 #'
 #' @export
