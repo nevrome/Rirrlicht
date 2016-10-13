@@ -4,7 +4,7 @@
 \alias{testirr1}
 \title{test}
 \usage{
-testirr1()
+testirr1(driverselect)
 }
 \arguments{
 \item{test}{}

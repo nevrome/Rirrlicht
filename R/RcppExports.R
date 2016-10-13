@@ -14,7 +14,7 @@
 #' 1+1
 #'
 #' @export
-testirr1 <- function() {
-    .Call('Rirrlicht_testirr1', PACKAGE = 'Rirrlicht')
+testirr1 <- function(driverselect) {
+    .Call('Rirrlicht_testirr1', PACKAGE = 'Rirrlicht', driverselect)
 }
 

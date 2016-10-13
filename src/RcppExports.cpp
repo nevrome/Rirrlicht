@@ -6,12 +6,13 @@
 using namespace Rcpp;
 
 // testirr1
-DataFrame testirr1();
-RcppExport SEXP Rirrlicht_testirr1() {
+DataFrame testirr1(char driverselect);
+RcppExport SEXP Rirrlicht_testirr1(SEXP driverselectSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    rcpp_result_gen = Rcpp::wrap(testirr1());
+    Rcpp::traits::input_parameter< char >::type driverselect(driverselectSEXP);
+    rcpp_result_gen = Rcpp::wrap(testirr1(driverselect));
     return rcpp_result_gen;
 END_RCPP
 }
