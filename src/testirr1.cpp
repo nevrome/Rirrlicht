@@ -50,7 +50,7 @@ class MyEventReceiver : public IEventReceiver {
 //' @description
 //' test
 //'
-//' @param test
+//' @param driverselect
 //'
 //' @return test
 //'
@@ -61,6 +61,7 @@ class MyEventReceiver : public IEventReceiver {
 // [[Rcpp::export]]
 DataFrame testirr1(char driverselect){
 
+  // driver selection
   E_DRIVER_TYPE driverType;
   
   switch(driverselect){
@@ -95,23 +96,35 @@ DataFrame testirr1(char driverselect){
   device->setEventReceiver(new MyEventReceiver());
   
   // load and show test .md2 model
-  scene::ISceneNode* node = scenemgr->addAnimatedMeshSceneNode(
-    scenemgr->getMesh("data-raw/farao.md2"));
+  scene::ISceneNode* node = scenemgr->
+    addAnimatedMeshSceneNode(scenemgr->getMesh("data-raw/farao.md2"));
   
   // if everything worked, add a texture and disable lighting
-  if (node)
-  {
-    node->setMaterialTexture(0, driver->getTexture("data-raw/farao.bmp"));
-    node->setMaterialFlag(video::EMF_LIGHTING, false);
+  if (node) {
+     node->setMaterialTexture(0, driver->getTexture("data-raw/farao.bmp"));
+     node->setMaterialFlag(video::EMF_LIGHTING, false);
+  }
+
+  // add cube and sphere
+  scenemgr->
+    addSphereSceneNode(50.0f, 16, 0, -1, core::vector3df(200,100,10));
+  
+  scenemgr->
+    addSphereSceneNode(50.0f, 16, 0, -1, core::vector3df(100,30,100));
+  
+  for (int i=0; i<=10; i++) {
+    scenemgr->
+      addSphereSceneNode(50.0f, 16, 0, -1, core::vector3df(i*100,i*30,100));
   }
   
   // add a first person shooter style user controlled camera
-  scenemgr->addCameraSceneNodeFPS();
+  ICameraSceneNode *camera = scenemgr->addCameraSceneNodeFPS();
+  camera->setTarget(node->getAbsolutePosition());
   
   // draw everything
   while(device->run() && driver)
   {
-    driver->beginScene(true, true, video::SColor(255,0,0,0));
+    driver->beginScene(true, true, video::SColor(255,255,255,255));
     scenemgr->drawAll();
     guienv->drawAll();
     driver->endScene();
