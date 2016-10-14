@@ -9,16 +9,16 @@ I'm not part of the Irrlicht Engine team and I'm not actively working on this --
 Installation
 ------------
 
-1. [Install Irrlicht](http://irrlicht.sourceforge.net/?page_id=10).
+1 -- [Install Irrlicht](http://irrlicht.sourceforge.net/?page_id=10).
 
-2. Install this package.
+2 -- Install this package.
 
 ```{r}
 # install.packages("devtools")
 devtools::install_github("nevrome/Rirrlicht")
 ``` 
 
-3. Test it.
+3 -- Test it.
 
 ```{r}
 library(Rirrlicht)
@@ -30,4 +30,6 @@ irrscatter(
   size = rnorm(500)*10, 
   driverselect = "a"
 )
+
+?irrmesh
 ``` 
