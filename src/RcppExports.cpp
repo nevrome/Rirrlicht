@@ -5,6 +5,19 @@
 
 using namespace Rcpp;
 
+// irrmesh
+bool irrmesh(SEXP pathmesh, SEXP pathtexture, char driverselect);
+RcppExport SEXP Rirrlicht_irrmesh(SEXP pathmeshSEXP, SEXP pathtextureSEXP, SEXP driverselectSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type pathmesh(pathmeshSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type pathtexture(pathtextureSEXP);
+    Rcpp::traits::input_parameter< char >::type driverselect(driverselectSEXP);
+    rcpp_result_gen = Rcpp::wrap(irrmesh(pathmesh, pathtexture, driverselect));
+    return rcpp_result_gen;
+END_RCPP
+}
 // irrscatter
 bool irrscatter(NumericVector x, NumericVector y, NumericVector z, NumericVector size, char driverselect);
 RcppExport SEXP Rirrlicht_irrscatter(SEXP xSEXP, SEXP ySEXP, SEXP zSEXP, SEXP sizeSEXP, SEXP driverselectSEXP) {
@@ -17,17 +30,6 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericVector >::type size(sizeSEXP);
     Rcpp::traits::input_parameter< char >::type driverselect(driverselectSEXP);
     rcpp_result_gen = Rcpp::wrap(irrscatter(x, y, z, size, driverselect));
-    return rcpp_result_gen;
-END_RCPP
-}
-// testirr1
-DataFrame testirr1(char driverselect);
-RcppExport SEXP Rirrlicht_testirr1(SEXP driverselectSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< char >::type driverselect(driverselectSEXP);
-    rcpp_result_gen = Rcpp::wrap(testirr1(driverselect));
     return rcpp_result_gen;
 END_RCPP
 }

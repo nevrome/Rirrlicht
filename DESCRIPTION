@@ -1,13 +1,13 @@
 Package: Rirrlicht
 Type: Package
-Title: Rirrlicht
+Title: Rirrlicht - Irrlicht engine API
 Version: 0.0.1
 Authors@R: c(
   person("Clemens", "Schmid", email = "clemens@nevrome.de", role = c("cre", "cph", "aut"))
   )
 Maintainer: Clemens Schmid <clemens@nevrome.de>
-Description: Rirrlicht
-Date: 2016-09-18
+Description: A small proof of concept of an R API for the Irrlicht game engine.
+Date: 2016-10-14
 License: GPL-2
 LazyData: TRUE
 RoxygenNote: 5.0.1

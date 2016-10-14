@@ -2,21 +2,40 @@
 % Please edit documentation in R/RcppExports.R
 \name{irrscatter}
 \alias{irrscatter}
-\title{test}
+\title{Irrlicht 3D scatterplot}
 \usage{
 irrscatter(x, y, z, size, driverselect)
 }
 \arguments{
-\item{driverselect}{}
+\item{x}{vector with x-axis coordinates}
+
+\item{y}{vector with y-axis coordinates}
+
+\item{z}{vector with z-axis coordinates}
+
+\item{size}{vector with size values}
+
+\item{driverselect}{"a": OPENGL,
+"b": DIRECT3D9
+"c": DIRECT3D8
+"d": BURNINGSVIDEO
+"e": SOFTWARE
+"f": NULL}
 }
 \value{
-test
+boolean value - side effect irrlicht window is relevant
 }
 \description{
-test
+Creates a 3D scatterplot using the Irrlicht engine.
 }
 \examples{
-irrscatter(x = rnorm(500)*200, y = rnorm(500)*200, z = rnorm(500)*200, size = rnorm(500)*10, driverselect = "a")
+#irrscatter(
+#  x = rnorm(500)*200, 
+#  y = rnorm(500)*200, 
+#  z = rnorm(500)*200, 
+#  size = rnorm(500)*10, 
+#  driverselect = "a"
+#)
 
 }
 
