@@ -3,7 +3,8 @@
 Rirrlicht
 ---------
 
-R package to provide an API for the [Irrlicht engine](http://irrlicht.sourceforge.net/). Two functions as a proof of concept. I'm not part of the Irrlicht Engine team and I'm not actively working on this -- feel free to take it over.
+R package to provide an API for the [Irrlicht engine](http://irrlicht.sourceforge.net/). Two functions as a proof of concept.  
+I'm not part of the Irrlicht Engine team and I'm not actively working on this -- feel free to take it over.
 
 Installation
 ------------
@@ -22,17 +23,17 @@ devtools::install_github("nevrome/Rirrlicht")
 ```{r}
 library(Rirrlicht)
 
-irrmesh(
-  "data-raw/farao.md2", 
-  "data-raw/farao.bmp", 
-  "a"
-)
-
 irrscatter(
   x = rnorm(500)*200, 
   y = rnorm(500)*200, 
   z = rnorm(500)*200, 
   size = rnorm(500)*10, 
   driverselect = "a"
+)
+
+irrmesh(
+  "data-raw/farao.md2", 
+  "data-raw/farao.bmp", 
+  "a"
 )
 ``` 
