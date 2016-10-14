@@ -30,10 +30,4 @@ irrscatter(
   size = rnorm(500)*10, 
   driverselect = "a"
 )
-
-irrmesh(
-  "data-raw/farao.md2", 
-  "data-raw/farao.bmp", 
-  "a"
-)
 ``` 

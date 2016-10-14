@@ -24,10 +24,13 @@ boolean value - side effect irrlicht window is relevant
 \description{
 Creates a 3D meshplot using the Irrlicht engine.
 }
+\details{
+For test data see for example \url{https://github.com/inexor-game/data-playground/tree/master/model/map/modelpack2}.
+}
 \examples{
 #irrmesh(
-# "data-raw/farao.md2", 
-# "data-raw/farao.bmp", 
+# "bspmesh.md2", 
+# "bsptexture.bmp", 
 # "a"
 #)
 

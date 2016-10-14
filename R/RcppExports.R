@@ -6,6 +6,9 @@
 #' @description
 #' Creates a 3D meshplot using the Irrlicht engine.
 #' 
+#' @details
+#' For test data see for example \url{https://github.com/inexor-game/data-playground/tree/master/model/map/modelpack2}.
+#' 
 #' @param pathmesh path to mesh (see supported formats here: \url{http://irrlicht.sourceforge.net/?page_id=45})
 #' @param pathtexture path to texture (see supported formats here: \url{http://irrlicht.sourceforge.net/?page_id=45})
 #' @param driverselect
@@ -20,8 +23,8 @@
 #'
 #' @examples
 #' #irrmesh(
-#' # "data-raw/farao.md2", 
-#' # "data-raw/farao.bmp", 
+#' # "bspmesh.md2", 
+#' # "bsptexture.bmp", 
 #' # "a"
 #' #)
 #'
