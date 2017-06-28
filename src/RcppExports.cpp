@@ -6,23 +6,20 @@
 using namespace Rcpp;
 
 // plot_irr
-bool plot_irr(NumericVector x, NumericVector y, NumericVector z, NumericVector size, char driverselect);
-RcppExport SEXP Rirrlicht_plot_irr(SEXP xSEXP, SEXP ySEXP, SEXP zSEXP, SEXP sizeSEXP, SEXP driverselectSEXP) {
+bool plot_irr(DataFrame points, char video_driver);
+RcppExport SEXP Rirrlicht_plot_irr(SEXP pointsSEXP, SEXP video_driverSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type y(ySEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type z(zSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type size(sizeSEXP);
-    Rcpp::traits::input_parameter< char >::type driverselect(driverselectSEXP);
-    rcpp_result_gen = Rcpp::wrap(plot_irr(x, y, z, size, driverselect));
+    Rcpp::traits::input_parameter< DataFrame >::type points(pointsSEXP);
+    Rcpp::traits::input_parameter< char >::type video_driver(video_driverSEXP);
+    rcpp_result_gen = Rcpp::wrap(plot_irr(points, video_driver));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"Rirrlicht_plot_irr", (DL_FUNC) &Rirrlicht_plot_irr, 5},
+    {"Rirrlicht_plot_irr", (DL_FUNC) &Rirrlicht_plot_irr, 2},
     {NULL, NULL, 0}
 };
 

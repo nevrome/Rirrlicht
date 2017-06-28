@@ -5,32 +5,33 @@
 #' @description
 #' Creates a 3D plot using the Irrlicht engine.
 #' 
-#' @param x vector with x-axis coordinates
-#' @param y vector with y-axis coordinates
-#' @param z vector with z-axis coordinates
-#' @param size vector with size values
-#' @param driverselect
-#'   "a": OPENGL,
-#'   "b": DIRECT3D9
-#'   "c": DIRECT3D8
-#'   "d": BURNINGSVIDEO
-#'   "e": SOFTWARE
-#'   "f": NULL
+#' @param points data.frame with coordinates and attributes of scattered points 
+#' @param video_driver
+#' \itemize{
+#'   \item{"a": }{OPENGL (default)} 
+#'   \item{"b": }{DIRECT3D9}
+#'   \item{"c": }{DIRECT3D8}
+#'   \item{"d": }{BURNINGSVIDEO}
+#'   \item{"e": }{SOFTWARE}
+#'   \item{"f": }{NULL}
+#' }
 #'
-#' @return boolean value - side effect irrlicht window is relevant
+#' @return boolean value - side effect; irrlicht window is relevant
 #'
 #' @examples
 #' \dontrun{
 #' plot_irr(
-#'   x = rnorm(500)*200, 
-#'   y = rnorm(500)*200, 
-#'   z = rnorm(500)*200, 
-#'   size = rnorm(500)*10
+#'   points = data.frame(
+#'     x = rnorm(500)*200, 
+#'     y = rnorm(500)*200, 
+#'     z = rnorm(500)*200,
+#'     size = rnorm(500)*10 
+#'   )
 #' )
 #' }
 #'
 #' @export
-plot_irr <- function(x, y, z, size, driverselect = 'a') {
-    .Call('Rirrlicht_plot_irr', PACKAGE = 'Rirrlicht', x, y, z, size, driverselect)
+plot_irr <- function(points, video_driver = 'a') {
+    .Call('Rirrlicht_plot_irr', PACKAGE = 'Rirrlicht', points, video_driver)
 }
 

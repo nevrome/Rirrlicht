@@ -4,26 +4,22 @@
 \alias{plot_irr}
 \title{Irrlicht 3D plot}
 \usage{
-plot_irr(x, y, z, size, driverselect = "a")
+plot_irr(points, video_driver = "a")
 }
 \arguments{
-\item{x}{vector with x-axis coordinates}
+\item{points}{data.frame with coordinates and attributes of scattered points}
 
-\item{y}{vector with y-axis coordinates}
-
-\item{z}{vector with z-axis coordinates}
-
-\item{size}{vector with size values}
-
-\item{driverselect}{"a": OPENGL,
-"b": DIRECT3D9
-"c": DIRECT3D8
-"d": BURNINGSVIDEO
-"e": SOFTWARE
-"f": NULL}
+\item{video_driver}{\itemize{
+  \item{"a": }{OPENGL (default)} 
+  \item{"b": }{DIRECT3D9}
+  \item{"c": }{DIRECT3D8}
+  \item{"d": }{BURNINGSVIDEO}
+  \item{"e": }{SOFTWARE}
+  \item{"f": }{NULL}
+}}
 }
 \value{
-boolean value - side effect irrlicht window is relevant
+boolean value - side effect; irrlicht window is relevant
 }
 \description{
 Creates a 3D plot using the Irrlicht engine.
@@ -31,10 +27,12 @@ Creates a 3D plot using the Irrlicht engine.
 \examples{
 \dontrun{
 plot_irr(
-  x = rnorm(500)*200, 
-  y = rnorm(500)*200, 
-  z = rnorm(500)*200, 
-  size = rnorm(500)*10
+  points = data.frame(
+    x = rnorm(500)*200, 
+    y = rnorm(500)*200, 
+    z = rnorm(500)*200,
+    size = rnorm(500)*10 
+  )
 )
 }
 
