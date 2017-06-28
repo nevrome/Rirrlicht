@@ -10,6 +10,8 @@ using namespace video;
 using namespace io;
 using namespace gui;
 
+// [[Rcpp::plugins("cpp11")]]
+
 //' Irrlicht 3D plot
 //' @description
 //' Creates a 3D plot using the Irrlicht engine.

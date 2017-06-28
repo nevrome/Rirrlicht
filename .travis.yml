@@ -15,6 +15,7 @@ addons:
   apt:
     packages:
     - valgrind
+    - libirrlicht1.8 
     - libirrlicht-dev
 
 warnings_are_errors: true
