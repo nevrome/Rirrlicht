@@ -2,9 +2,9 @@
 % Please edit documentation in R/RcppExports.R
 \name{plot_irr}
 \alias{plot_irr}
-\title{Irrlicht 3D scatterplot}
+\title{Irrlicht 3D plot}
 \usage{
-plot_irr(x, y, z, size, driverselect)
+plot_irr(x, y, z, size, driverselect = "a")
 }
 \arguments{
 \item{x}{vector with x-axis coordinates}
@@ -26,15 +26,16 @@ plot_irr(x, y, z, size, driverselect)
 boolean value - side effect irrlicht window is relevant
 }
 \description{
-Creates a 3D scatterplot using the Irrlicht engine.
+Creates a 3D plot using the Irrlicht engine.
 }
 \examples{
-#plot_irr(
-#  x = rnorm(500)*200, 
-#  y = rnorm(500)*200, 
-#  z = rnorm(500)*200, 
-#  size = rnorm(500)*10, 
-#  driverselect = "a"
-#)
+\dontrun{
+plot_irr(
+  x = rnorm(500)*200, 
+  y = rnorm(500)*200, 
+  z = rnorm(500)*200, 
+  size = rnorm(500)*10
+)
+}
 
 }

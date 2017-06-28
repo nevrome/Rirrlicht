@@ -10,9 +10,9 @@ using namespace video;
 using namespace io;
 using namespace gui;
 
-//' Irrlicht 3D scatterplot
+//' Irrlicht 3D plot
 //' @description
-//' Creates a 3D scatterplot using the Irrlicht engine.
+//' Creates a 3D plot using the Irrlicht engine.
 //' 
 //' @param x vector with x-axis coordinates
 //' @param y vector with y-axis coordinates
@@ -29,17 +29,24 @@ using namespace gui;
 //' @return boolean value - side effect irrlicht window is relevant
 //'
 //' @examples
-//' #plot_irr(
-//' #  x = rnorm(500)*200, 
-//' #  y = rnorm(500)*200, 
-//' #  z = rnorm(500)*200, 
-//' #  size = rnorm(500)*10, 
-//' #  driverselect = "a"
-//' #)
+//' \dontrun{
+//' plot_irr(
+//'   x = rnorm(500)*200, 
+//'   y = rnorm(500)*200, 
+//'   z = rnorm(500)*200, 
+//'   size = rnorm(500)*10
+//' )
+//' }
 //'
 //' @export
 // [[Rcpp::export]]
-bool plot_irr(NumericVector x, NumericVector y, NumericVector z, NumericVector size, char driverselect){
+bool plot_irr(
+  NumericVector x, 
+  NumericVector y, 
+  NumericVector z, 
+  NumericVector size, 
+  char driverselect = 'a'
+){
   
   // driver selection
   E_DRIVER_TYPE driverType;
