@@ -10,7 +10,7 @@ Description: A small proof of concept of an R API for the Irrlicht game engine.
 Date: 2016-10-14
 License: GPL-2
 LazyData: TRUE
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 Imports:
     Rcpp (>= 0.12.7)
 Suggests:

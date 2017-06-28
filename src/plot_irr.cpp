@@ -1,52 +1,16 @@
 #include <Rcpp.h>
 #include <cstdlib>
-#include <iostream>
-#include <irrlicht.h>
-#include <IEventReceiver.h>
+#include "event_receiver.h"
 
 using namespace Rcpp;
 using namespace irr;
-
 using namespace core;
 using namespace scene;
 using namespace video;
 using namespace io;
 using namespace gui;
 
-IrrlichtDevice* scattdevice = 0;
-
-// event receiver class
-class MyEventReceiver : public IEventReceiver {
-public:
-  virtual bool OnEvent(const SEvent& event) {
-    // Remember whether each key is down or up
-    if (event.EventType == EET_KEY_INPUT_EVENT){
-      KeyIsDown[event.KeyInput.Key] = event.KeyInput.PressedDown;
-    } 
-    // closing event
-    if (event.EventType == EET_KEY_INPUT_EVENT && event.KeyInput.Key == KEY_ESCAPE && event.KeyInput.PressedDown){
-      scattdevice->closeDevice();
-    }
-    return false;
-  }
-  
-  // This is used to check whether a key is being held down
-  virtual bool IsKeyDown(EKEY_CODE keyCode) const {
-    return KeyIsDown[keyCode];
-  }
-  
-  MyEventReceiver() {
-    for (u32 i=0; i<KEY_KEY_CODES_COUNT; ++i)
-      KeyIsDown[i] = false;
-  }
-  
-private:
-  // We use this array to store the current state of each key
-  bool KeyIsDown[KEY_KEY_CODES_COUNT];
-};
-
 //' Irrlicht 3D scatterplot
-//'
 //' @description
 //' Creates a 3D scatterplot using the Irrlicht engine.
 //' 
@@ -65,7 +29,7 @@ private:
 //' @return boolean value - side effect irrlicht window is relevant
 //'
 //' @examples
-//' #irrscatter(
+//' #plot_irr(
 //' #  x = rnorm(500)*200, 
 //' #  y = rnorm(500)*200, 
 //' #  z = rnorm(500)*200, 
@@ -75,7 +39,7 @@ private:
 //'
 //' @export
 // [[Rcpp::export]]
-bool irrscatter(NumericVector x, NumericVector y, NumericVector z, NumericVector size, char driverselect){
+bool plot_irr(NumericVector x, NumericVector y, NumericVector z, NumericVector size, char driverselect){
   
   // driver selection
   E_DRIVER_TYPE driverType;
@@ -91,27 +55,37 @@ bool irrscatter(NumericVector x, NumericVector y, NumericVector z, NumericVector
   }
   
   // start up the engine   
-  scattdevice = createDevice(
+  plotdevice = createDevice(
     driverType,
     core::dimension2d<u32>(1000,700)
   );
   
   // test if engine is running
-  if (!scattdevice)
+  if (!plotdevice)
     return true;
   
   // initialize videodriver, scenemanager and guienvironment
-  video::IVideoDriver* driver = scattdevice->getVideoDriver();
-  scene::ISceneManager* scenemgr = scattdevice->getSceneManager();
-  IGUIEnvironment* guienv = scattdevice->getGUIEnvironment();
+  video::IVideoDriver* driver = plotdevice->getVideoDriver();
+  scene::ISceneManager* scenemgr = plotdevice->getSceneManager();
+  IGUIEnvironment* guienv = plotdevice->getGUIEnvironment();
   
   // set window title
-  scattdevice->setWindowCaption(L"irrlicht - Plot");
+  plotdevice->setWindowCaption(L"irrlicht - Plot");
   // make cursor invisible
-  scattdevice->getCursorControl()->setVisible(false);
+  plotdevice->getCursorControl()->setVisible(false);
   
   // create event receiver for closing with escape
-  scattdevice->setEventReceiver(new MyEventReceiver());
+  plotdevice->setEventReceiver(new MyEventReceiver());
+  
+  // // load and show test .md2 model
+  // scene::ISceneNode* node = scenemgr->
+  //   addAnimatedMeshSceneNode(scenemgr->getMesh(pathmeshstr.c_str()));
+  // 
+  // // if everything worked, add a texture and disable lighting
+  // if (node) {
+  //   node->setMaterialTexture(0, driver->getTexture(pathtexturestr.c_str()));
+  //   node->setMaterialFlag(video::EMF_LIGHTING, false);
+  // }
   
   // create first scenenode from first point
   scene::ISceneNode* node = scenemgr->
@@ -124,7 +98,7 @@ bool irrscatter(NumericVector x, NumericVector y, NumericVector z, NumericVector
   }
 
   // define font
-  gui::IGUIFont* font = scattdevice->getGUIEnvironment()->getBuiltInFont();
+  gui::IGUIFont* font = plotdevice->getGUIEnvironment()->getBuiltInFont();
     
   // coordinate system text
   // scene::IBillboardTextSceneNode* bill = 0;
@@ -139,7 +113,7 @@ bool irrscatter(NumericVector x, NumericVector y, NumericVector z, NumericVector
   ICameraSceneNode *camera = scenemgr->addCameraSceneNodeFPS();
 
   // draw everything (run-loop)
-  while (scattdevice->run() && driver) {
+  while (plotdevice->run() && driver) {
     // set scene with background color
     driver->beginScene(true, true, video::SColor(255,255,255,255));
     // add fixed text
@@ -159,8 +133,8 @@ bool irrscatter(NumericVector x, NumericVector y, NumericVector z, NumericVector
     driver->endScene();
   }
   
-  // delete scattdevice
-  scattdevice->drop();
+  // delete plotdevice
+  plotdevice->drop();
   
   return true;
 }
