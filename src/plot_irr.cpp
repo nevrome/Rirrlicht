@@ -50,13 +50,13 @@ bool plot_irr(
   // driver selection
   E_DRIVER_TYPE driverType;
   switch (video_driver) {
-  case 'a': driverType = video::EDT_OPENGL;       break;
-  case 'b': driverType = video::EDT_DIRECT3D9;    break;
-  case 'c': driverType = video::EDT_DIRECT3D8;    break;
-  case 'd': driverType = video::EDT_BURNINGSVIDEO;break;
-  case 'e': driverType = video::EDT_SOFTWARE;     break;
-  case 'f': driverType = video::EDT_NULL;         break;
-  default: return 1;
+    case 'a': driverType = video::EDT_OPENGL;        break;
+    case 'b': driverType = video::EDT_DIRECT3D9;     break;
+    case 'c': driverType = video::EDT_DIRECT3D8;     break;
+    case 'd': driverType = video::EDT_BURNINGSVIDEO; break;
+    case 'e': driverType = video::EDT_SOFTWARE;      break;
+    case 'f': driverType = video::EDT_NULL;          break;
+    default: return 1;
   }
   
   // start up the engine   
@@ -66,8 +66,7 @@ bool plot_irr(
   );
   
   // test if engine is running
-  if (!plotdevice)
-    return true;
+  if (!plotdevice) {return true;}
   
   // initialize videodriver, scenemanager and guienvironment
   video::IVideoDriver* driver = plotdevice->getVideoDriver();
@@ -81,18 +80,11 @@ bool plot_irr(
   
   // create event receiver for closing with escape
   plotdevice->setEventReceiver(new MyEventReceiver());
+
   
-  // // load and show test .md2 model
-  // scene::ISceneNode* node = scenemgr->
-  //   addAnimatedMeshSceneNode(scenemgr->getMesh(pathmeshstr.c_str()));
-  // 
-  // // if everything worked, add a texture and disable lighting
-  // if (node) {
-  //   node->setMaterialTexture(0, driver->getTexture(pathtexturestr.c_str()));
-  //   node->setMaterialFlag(video::EMF_LIGHTING, false);
-  // }
-  
-  //add points to scene
+  // add stuff to scene
+    
+  // add points 
   if (points_df.isNotNull()) {
  
     DataFrame points = as<DataFrame>(points_df);
@@ -125,6 +117,22 @@ bool plot_irr(
         addSphereSceneNode(size(i), 16, 0, -1, core::vector3df(x(i),y(i),z(i)));
     }
   }
+  
+  // add lines
+  
+  // add rasters
+  
+  // add meshes
+  
+  // // load and show test .md2 model
+  // scene::ISceneNode* node = scenemgr->
+  //   addAnimatedMeshSceneNode(scenemgr->getMesh(pathmeshstr.c_str()));
+  // 
+  // // if everything worked, add a texture and disable lighting
+  // if (node) {
+  //   node->setMaterialTexture(0, driver->getTexture(pathtexturestr.c_str()));
+  //   node->setMaterialFlag(video::EMF_LIGHTING, false);
+  // }
 
   // define font
   gui::IGUIFont* font = plotdevice->getGUIEnvironment()->getBuiltInFont();
