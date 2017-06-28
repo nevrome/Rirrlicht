@@ -6,14 +6,14 @@
 using namespace Rcpp;
 
 // plot_irr
-bool plot_irr(DataFrame points, char video_driver);
-RcppExport SEXP Rirrlicht_plot_irr(SEXP pointsSEXP, SEXP video_driverSEXP) {
+bool plot_irr(Nullable<DataFrame> points_df, char video_driver);
+RcppExport SEXP Rirrlicht_plot_irr(SEXP points_dfSEXP, SEXP video_driverSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< DataFrame >::type points(pointsSEXP);
+    Rcpp::traits::input_parameter< Nullable<DataFrame> >::type points_df(points_dfSEXP);
     Rcpp::traits::input_parameter< char >::type video_driver(video_driverSEXP);
-    rcpp_result_gen = Rcpp::wrap(plot_irr(points, video_driver));
+    rcpp_result_gen = Rcpp::wrap(plot_irr(points_df, video_driver));
     return rcpp_result_gen;
 END_RCPP
 }

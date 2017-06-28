@@ -10,13 +10,12 @@ using namespace video;
 using namespace io;
 using namespace gui;
 
-// [[Rcpp::plugins("cpp11")]]
-
 //' Irrlicht 3D plot
 //' @description
 //' Creates a 3D plot using the Irrlicht engine.
 //' 
-//' @param points data.frame with coordinates and attributes of scattered points 
+//' @param points_df optional - data.frame with coordinates and attributes 
+//' of scattered points 
 //' @param video_driver
 //' \itemize{
 //'   \item{"a": }{OPENGL (default)} 
@@ -44,29 +43,9 @@ using namespace gui;
 //' @export
 // [[Rcpp::export]]
 bool plot_irr(
-  DataFrame points,
+  Nullable<DataFrame> points_df = R_NilValue,
   char video_driver = 'a'
 ){
-  
-  // manage input data
-  
-  // coordinates
-  NumericVector x = points["x"];
-  NumericVector y = points["y"];
-  NumericVector z = points["z"];
-  
-  // check for other variables
-  CharacterVector points_attributes = points.attr("names");
-  
-  // define default point size
-  NumericVector size = rep(NumericVector::create(1), points.nrow());
-
-  for (auto pas : points_attributes) {
-    // set point size from input
-    if (pas == "size") {
-      size = points["size"];
-    }
-  }
   
   // driver selection
   E_DRIVER_TYPE driverType;
@@ -113,14 +92,38 @@ bool plot_irr(
   //   node->setMaterialFlag(video::EMF_LIGHTING, false);
   // }
   
-  // create first scenenode from first point
-  scene::ISceneNode* node = scenemgr->
-    addSphereSceneNode(size(0), 16, 0, -1, core::vector3df(x(0),y(0),z(0)));
-  
-  // add scenenodes for every following point
-  for (int i=1; i<x.size(); i++) {
-    scenemgr->
-      addSphereSceneNode(size(i), 16, 0, -1, core::vector3df(x(i),y(i),z(i)));
+  //add points to scene
+  if (points_df.isNotNull()) {
+ 
+    DataFrame points = as<DataFrame>(points_df);
+    
+    // coordinates
+    NumericVector x = points["x"];
+    NumericVector y = points["y"];
+    NumericVector z = points["z"];
+    
+    // check for other variables
+    CharacterVector points_attributes = points.attr("names");
+    
+    // define default point size
+    NumericVector size = rep(NumericVector::create(1), points.nrow());
+    
+    for (auto pas : points_attributes) {
+      // set point size from input
+      if (pas == "size") {
+        size = points["size"];
+      }
+    }
+ 
+    // create first scenenode from first point
+    scene::ISceneNode* node = scenemgr->
+      addSphereSceneNode(size(0), 16, 0, -1, core::vector3df(x(0),y(0),z(0)));
+    
+    // add scenenodes for every following point
+    for (int i=1; i<x.size(); i++) {
+      scenemgr->
+        addSphereSceneNode(size(i), 16, 0, -1, core::vector3df(x(i),y(i),z(i)));
+    }
   }
 
   // define font

@@ -5,7 +5,8 @@
 #' @description
 #' Creates a 3D plot using the Irrlicht engine.
 #' 
-#' @param points data.frame with coordinates and attributes of scattered points 
+#' @param points_df optional - data.frame with coordinates and attributes 
+#' of scattered points 
 #' @param video_driver
 #' \itemize{
 #'   \item{"a": }{OPENGL (default)} 
@@ -31,7 +32,7 @@
 #' }
 #'
 #' @export
-plot_irr <- function(points, video_driver = 'a') {
-    .Call('Rirrlicht_plot_irr', PACKAGE = 'Rirrlicht', points, video_driver)
+plot_irr <- function(points_df = NULL, video_driver = 'a') {
+    .Call('Rirrlicht_plot_irr', PACKAGE = 'Rirrlicht', points_df, video_driver)
 }
 
