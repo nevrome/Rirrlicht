@@ -1,2 +1,3 @@
 PKG_LIBS = -lIrrlicht 
 PKG_CPPFLAGS =  -I /usr/include/irrlicht/
+CXX_STD = CXX11
