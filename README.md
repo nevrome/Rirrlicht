@@ -1,10 +1,13 @@
-[![license](https://img.shields.io/badge/license-GPL%202-B50B82.svg)](http://www.r-project.org/Licenses/GPL-2)
+[![Travis-CI Build Status](https://travis-ci.org/nevrome/Rirrlicht.svg?branch=master)](https://travis-ci.org/nevrome/Rirrlicht) [![Coverage Status](https://img.shields.io/codecov/c/github/nevrome/Rirrlicht/master.svg)](https://codecov.io/github/nevrome/Rirrlicht?branch=master)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/Rirrlicht)](http://cran.r-project.org/package=Rirrlicht)
+[![license](https://img.shields.io/badge/license-GPL%202-B50B82.svg)](https://www.r-project.org/Licenses/GPL-2)
 
 Rirrlicht
 ---------
 
-R package to provide an API for the [Irrlicht engine](http://irrlicht.sourceforge.net/). Two functions as a proof of concept.  
-I'm not part of the Irrlicht Engine team and I'm not actively working on this -- feel free to take it over.
+R package to provide a plot API for the [Irrlicht engine](http://irrlicht.sourceforge.net/).
+
+I'm not part of the Irrlicht Engine team -- this is just an API.
 
 Installation
 ------------
@@ -23,13 +26,12 @@ devtools::install_github("nevrome/Rirrlicht")
 ```{r}
 library(Rirrlicht)
 
-irrscatter(
-  x = rnorm(500)*200, 
-  y = rnorm(500)*200, 
-  z = rnorm(500)*200, 
-  size = rnorm(500)*10, 
-  driverselect = "a"
+plot_irr(
+  points = data.frame(
+    x = rnorm(500)*200, 
+    y = rnorm(500)*200, 
+    z = rnorm(500)*200,
+    size = rnorm(500)*10 
+  )
 )
-
-?irrmesh
 ``` 
