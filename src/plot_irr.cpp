@@ -108,8 +108,8 @@ bool plot_irr(
     }
  
     // create first scenenode from first point
-    scene::ISceneNode* node = scenemgr->
-      addSphereSceneNode(size(0), 16, 0, -1, core::vector3df(x(0),y(0),z(0)));
+    scene::ISceneNode* node = 
+      scenemgr->addSphereSceneNode(size(0), 16, 0, -1, core::vector3df(x(0),y(0),z(0)));
     
     // add scenenodes for every following point
     for (int i=1; i<x.size(); i++) {
