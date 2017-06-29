@@ -121,6 +121,25 @@ bool plot_irr(
   // add lines
   
   // add rasters
+  // ITexture* images = driver->getTexture("data/berries.png");
+  // 
+  // //guienv->addImage(images, position2d<int>(10,10));
+  
+  
+  // add doomhud  
+  
+  float width = driver->getViewPort().getWidth();
+  float height = driver->getViewPort().getHeight();
+  
+  ITexture* tex = driver->getTexture("data-raw/doomhud.png");
+
+  IGUIImage* img;
+  
+  img = guienv->addImage(core::rect<s32>(0, 400, width, height));
+  img->setImage(tex);
+  img->setScaleImage(true);
+  driver->removeTexture(tex);
+  
   
   // add meshes
   
