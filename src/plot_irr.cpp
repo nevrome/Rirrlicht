@@ -1,5 +1,6 @@
 #include <Rcpp.h>
 #include <cstdlib>
+#include <unistd.h>
 #include "event_receiver.h"
 
 using namespace Rcpp;
@@ -16,6 +17,7 @@ using namespace gui;
 //' 
 //' @param points_df optional - data.frame with coordinates and attributes 
 //' of scattered points 
+//' @param mesh_string_input floet
 //' @param video_driver
 //' \itemize{
 //'   \item{"a": }{OPENGL (default)} 
@@ -44,6 +46,7 @@ using namespace gui;
 // [[Rcpp::export]]
 bool plot_irr(
   Nullable<DataFrame> points_df = R_NilValue,
+  Nullable<std::string> mesh_string_input = R_NilValue,
   char video_driver = 'a'
 ){
   
@@ -125,6 +128,39 @@ bool plot_irr(
   // 
   // //guienv->addImage(images, position2d<int>(10,10));
   
+  // add meshes
+  
+  if (mesh_string_input.isNotNull()) {
+    
+    std::string mesh_string = Rcpp::as<std::string>(mesh_string_input);
+    const void * a = mesh_string.c_str();
+    
+    //std::istringstream is(mesh_string);
+    
+    char filename[] = "/tmp/mytemp.XXXXXX.ply";
+    int fd = mkstemps(filename, 4); 
+    if (fd == -1) return 1;
+    write(fd, a, mesh_string.length()); 
+    
+    // char filetype[] = ".ply";
+    // char * newArray = new char[std::strlen(filename)+std::strlen(filetype)+1];
+    // std::strcpy(newArray,filename);
+    // std::strcat(newArray,filetype);
+    
+    //load and and add mesh
+    scene::ISceneNode* node =
+      scenemgr->addAnimatedMeshSceneNode(scenemgr->getMesh(filename));
+
+    close(fd);
+    unlink(filename); 
+    
+    // if everything worked, add a texture and disable lighting
+    // if (node) {
+    //   node->setMaterialTexture(0, driver->getTexture(pathtexturestr.c_str()));
+    //   node->setMaterialFlag(video::EMF_LIGHTING, false);
+    // }
+    
+  }
   
   // add doomhud  
   
@@ -132,7 +168,7 @@ bool plot_irr(
   float height = driver->getViewPort().getHeight();
   
   ITexture* tex = driver->getTexture("data-raw/doomhud.png");
-
+  
   IGUIImage* img;
   
   img = guienv->addImage(core::rect<s32>(0, 400, width, height));
@@ -140,19 +176,6 @@ bool plot_irr(
   img->setScaleImage(true);
   driver->removeTexture(tex);
   
-  
-  // add meshes
-  
-  // // load and show test .md2 model
-  // scene::ISceneNode* node = scenemgr->
-  //   addAnimatedMeshSceneNode(scenemgr->getMesh(pathmeshstr.c_str()));
-  // 
-  // // if everything worked, add a texture and disable lighting
-  // if (node) {
-  //   node->setMaterialTexture(0, driver->getTexture(pathtexturestr.c_str()));
-  //   node->setMaterialFlag(video::EMF_LIGHTING, false);
-  // }
-
   // define font
   gui::IGUIFont* font = plotdevice->getGUIEnvironment()->getBuiltInFont();
     

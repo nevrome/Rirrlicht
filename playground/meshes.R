@@ -12,6 +12,6 @@ rawConnectionValue(zz) %>%
   rawToChar() -> res
 close.connection(zz)
 
-res
 
 
+plot_irr(mesh_string_input = res)

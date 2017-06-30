@@ -6,20 +6,21 @@
 using namespace Rcpp;
 
 // plot_irr
-bool plot_irr(Nullable<DataFrame> points_df, char video_driver);
-RcppExport SEXP Rirrlicht_plot_irr(SEXP points_dfSEXP, SEXP video_driverSEXP) {
+bool plot_irr(Nullable<DataFrame> points_df, Nullable<std::string> mesh_string_input, char video_driver);
+RcppExport SEXP Rirrlicht_plot_irr(SEXP points_dfSEXP, SEXP mesh_string_inputSEXP, SEXP video_driverSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Nullable<DataFrame> >::type points_df(points_dfSEXP);
+    Rcpp::traits::input_parameter< Nullable<std::string> >::type mesh_string_input(mesh_string_inputSEXP);
     Rcpp::traits::input_parameter< char >::type video_driver(video_driverSEXP);
-    rcpp_result_gen = Rcpp::wrap(plot_irr(points_df, video_driver));
+    rcpp_result_gen = Rcpp::wrap(plot_irr(points_df, mesh_string_input, video_driver));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"Rirrlicht_plot_irr", (DL_FUNC) &Rirrlicht_plot_irr, 2},
+    {"Rirrlicht_plot_irr", (DL_FUNC) &Rirrlicht_plot_irr, 3},
     {NULL, NULL, 0}
 };
 
