@@ -31,5 +31,14 @@ rawConnectionValue(zz) %>%
   rawToChar() -> res2
 close.connection(zz)
 
+#m2p(x = huup, filename = "~/test/hununu")
 
 plot_irr(mesh_string_list = c(res1, res2))
+
+
+
+rawConnection(raw(0), "r+") -> zz
+mesh2obj(x = hu, filename = zz)
+rawConnectionValue(zz) %>%
+  rawToChar() -> res2
+close.connection(zz)
