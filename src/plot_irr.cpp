@@ -17,7 +17,7 @@ using namespace gui;
 //' 
 //' @param points_df optional - data.frame with coordinates and attributes 
 //' of scattered points 
-//' @param mesh_string_input floet
+//' @param mesh_cv floet
 //' @param doomhud fluet
 //' @param video_driver
 //' \itemize{
@@ -47,7 +47,7 @@ using namespace gui;
 // [[Rcpp::export]]
 bool plot_irr(
   Nullable<DataFrame> points_df = R_NilValue,
-  Nullable<std::string> mesh_string_input = R_NilValue,
+  Nullable<CharacterVector> mesh_cv = R_NilValue,
   bool doomhud = false, 
   char video_driver = 'a'
 ){
@@ -131,37 +131,38 @@ bool plot_irr(
   // //guienv->addImage(images, position2d<int>(10,10));
   
   // add meshes
-  
-  if (mesh_string_input.isNotNull()) {
+  if (mesh_cv.isNotNull()) {
     
-    std::string mesh_string = Rcpp::as<std::string>(mesh_string_input);
-    const void * a = mesh_string.c_str();
+    //convert from Nullable to CharacterVector
+    CharacterVector mesh_cv_not_nullable = as<CharacterVector>(mesh_cv);
     
-    //std::istringstream is(mesh_string);
-    
-    char filename[] = "/tmp/mytemp.XXXXXX.ply";
-    int fd = mkstemps(filename, 4); 
-    if (fd == -1) return 1;
-    write(fd, a, mesh_string.length()); 
-    
-    // char filetype[] = ".ply";
-    // char * newArray = new char[std::strlen(filename)+std::strlen(filetype)+1];
-    // std::strcpy(newArray,filename);
-    // std::strcat(newArray,filetype);
-    
-    //load and and add mesh
-    scene::ISceneNode* node =
-      scenemgr->addAnimatedMeshSceneNode(scenemgr->getMesh(filename));
+    // loop through all strings
+    for (auto mesh_string_pointer : mesh_cv_not_nullable) {
 
-    close(fd);
-    unlink(filename); 
-    
-    // if everything worked, add a texture and disable lighting
-    // if (node) {
-    //   node->setMaterialTexture(0, driver->getTexture(pathtexturestr.c_str()));
-    //   node->setMaterialFlag(video::EMF_LIGHTING, false);
-    // }
-    
+      //write string to temporary file
+      std::string mesh_string = Rcpp::as<std::string>(mesh_string_pointer);
+      const void * a = mesh_string.c_str();
+      char filename[] = "/tmp/mytemp.XXXXXX.ply";
+      int fd = mkstemps(filename, 4); 
+      if (fd == -1) return 1;
+      if (write(fd, a, mesh_string.length()) == -1) {
+        Rcout << "Error in the creation of a temporary file.\n";
+      } 
+      
+      //load mesh from file and add it to the scene
+      scene::ISceneNode* node =
+        scenemgr->addAnimatedMeshSceneNode(scenemgr->getMesh(filename));
+  
+      // close file connection and remove temporary file 
+      close(fd);
+      unlink(filename); 
+      
+      // if everything worked, add a texture and disable lighting
+      // if (node) {
+      //   node->setMaterialTexture(0, driver->getTexture(pathtexturestr.c_str()));
+      //   node->setMaterialFlag(video::EMF_LIGHTING, false);
+      // }
+    }
   }
   
   // add doomhud  

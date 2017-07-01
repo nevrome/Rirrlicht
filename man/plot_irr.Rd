@@ -4,14 +4,14 @@
 \alias{plot_irr}
 \title{Irrlicht 3D plot}
 \usage{
-plot_irr(points_df = NULL, mesh_string_input = NULL, doomhud = FALSE,
+plot_irr(points_df = NULL, mesh_cv = NULL, doomhud = FALSE,
   video_driver = "a")
 }
 \arguments{
 \item{points_df}{optional - data.frame with coordinates and attributes 
 of scattered points}
 
-\item{mesh_string_input}{floet}
+\item{mesh_cv}{floet}
 
 \item{doomhud}{fluet}
 

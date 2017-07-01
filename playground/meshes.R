@@ -9,9 +9,27 @@ hu %>% rgl::plot3d()
 rawConnection(raw(0), "r+") -> zz
 m2p(x = hu, filename = zz)
 rawConnectionValue(zz) %>%
-  rawToChar() -> res
+  rawToChar() -> res1
 close.connection(zz)
 
 
+# my own mesh
+vertices <- c( 
+  -100.0, -100.0, 0, 100.0,
+  50.0, -50.0, 0, 50.0,
+  100.0,  100.0, 0, 100.0,
+  -50.0,  50.0, 0, 50.0
+)
+indices <- c( 1, 2, 3, 4 )
 
-plot_irr(mesh_string_input = res)
+qmesh3d(vertices, indices) -> huup # %>% wire3d() 
+
+
+rawConnection(raw(0), "r+") -> zz
+m2p(x = huup, filename = zz)
+rawConnectionValue(zz) %>%
+  rawToChar() -> res2
+close.connection(zz)
+
+
+plot_irr(mesh_string_list = c(res1, res2))
