@@ -8,6 +8,7 @@
 #' @param points_df optional - data.frame with coordinates and attributes 
 #' of scattered points 
 #' @param mesh_string_input floet
+#' @param doomhud fluet
 #' @param video_driver
 #' \itemize{
 #'   \item{"a": }{OPENGL (default)} 
@@ -33,7 +34,7 @@
 #' }
 #'
 #' @export
-plot_irr <- function(points_df = NULL, mesh_string_input = NULL, video_driver = 'a') {
-    .Call('Rirrlicht_plot_irr', PACKAGE = 'Rirrlicht', points_df, mesh_string_input, video_driver)
+plot_irr <- function(points_df = NULL, mesh_string_input = NULL, doomhud = FALSE, video_driver = 'a') {
+    .Call('Rirrlicht_plot_irr', PACKAGE = 'Rirrlicht', points_df, mesh_string_input, doomhud, video_driver)
 }
 

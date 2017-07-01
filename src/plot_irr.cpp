@@ -18,6 +18,7 @@ using namespace gui;
 //' @param points_df optional - data.frame with coordinates and attributes 
 //' of scattered points 
 //' @param mesh_string_input floet
+//' @param doomhud fluet
 //' @param video_driver
 //' \itemize{
 //'   \item{"a": }{OPENGL (default)} 
@@ -47,6 +48,7 @@ using namespace gui;
 bool plot_irr(
   Nullable<DataFrame> points_df = R_NilValue,
   Nullable<std::string> mesh_string_input = R_NilValue,
+  bool doomhud = false, 
   char video_driver = 'a'
 ){
   
@@ -163,18 +165,19 @@ bool plot_irr(
   }
   
   // add doomhud  
-  
-  float width = driver->getViewPort().getWidth();
-  float height = driver->getViewPort().getHeight();
-  
-  ITexture* tex = driver->getTexture("data-raw/doomhud.png");
-  
-  IGUIImage* img;
-  
-  img = guienv->addImage(core::rect<s32>(0, 400, width, height));
-  img->setImage(tex);
-  img->setScaleImage(true);
-  driver->removeTexture(tex);
+  if (doomhud) {
+    float width = driver->getViewPort().getWidth();
+    float height = driver->getViewPort().getHeight();
+    
+    ITexture* tex = driver->getTexture("data-raw/doomhud.png");
+    
+    IGUIImage* img;
+    
+    img = guienv->addImage(core::rect<s32>(0, 400, width, height));
+    img->setImage(tex);
+    img->setScaleImage(true);
+    driver->removeTexture(tex);
+  }
   
   // define font
   gui::IGUIFont* font = plotdevice->getGUIEnvironment()->getBuiltInFont();
