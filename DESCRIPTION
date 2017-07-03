@@ -12,11 +12,12 @@ License: GPL-2
 LazyData: TRUE
 RoxygenNote: 6.0.1
 Imports:
-    Rcpp (>= 0.12.7)
+    Rcpp (>= 0.12.7),
+    magrittr (>= 1.5),
+    Morpho (>= 2.5.1)
 Suggests:
     devtools (>= 1.12.0),
     knitr,
-    magrittr (>= 1.5),
     rmarkdown (>= 1.0),
     roxygen2 (>= 5.0.1),
     testthat (>= 1.0.2)
