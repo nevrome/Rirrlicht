@@ -130,6 +130,64 @@ bool plot_irr(
   // 
   // //guienv->addImage(images, position2d<int>(10,10));
   
+  NumericVector xras = NumericVector::create(100.0, 100.0, 500.0, 500.0 );
+  NumericVector yras = NumericVector::create(10.0, 0.0, 0.0, 10.0 );
+  NumericVector zras = NumericVector::create(100.0, 500.0, 100.0, 500.0 );
+  
+  //DataFrame df = DataFrame::create( _["v1"] = v1 , _["V2"] = v2 );
+  
+  NumericVector vertex1 = NumericVector::create(
+    xras(0), yras(0), zras(0)
+  );
+  
+  NumericVector vertex2 = NumericVector::create(
+    xras(1), yras(1), zras(1)
+  );
+  
+  NumericVector vertex3 = NumericVector::create(
+    xras(2), yras(2), zras(2)
+  );
+  
+  NumericVector v1 = vertex2 - vertex1;
+  NumericVector v2 = vertex3 - vertex1;
+  
+  NumericVector normal = NumericVector::create(
+    v1(1)*v2(2) - v2(1)*v1(2),
+    v1(2)*v2(0) - v2(2)*v1(0),
+    v1(0)*v2(1) - v2(0)*v1(1)
+  );
+  
+  
+  scene::ISceneNode * picturenode = scenemgr->addCubeSceneNode();
+  
+  if (picturenode) {
+    // position: mean of coordinates
+    picturenode->setPosition(core::vector3df(
+      (xras(0) + xras(3)) / 2,
+      (yras(0) + yras(3)) / 2,
+      (zras(0) + zras(3)) / 2
+    ));
+    // rotation
+    picturenode->setRotation(core::vector3df(
+        normal(0), 
+        normal(1), 
+        normal(2)
+    ));
+    picturenode->setScale(core::vector3df(
+        10, 0.1, 10
+    ));
+    picturenode->setMaterialTexture(0, driver->getTexture("data-raw/berries.png"));
+    picturenode->setMaterialFlag(video::EMF_LIGHTING, false);
+  }
+  
+  // virtual IMeshSceneNode * addCubeSceneNode (
+  // f32 size=10.0f, 
+  //   ISceneNode *parent=0, 
+  //   s32 id=-1, 
+  //   const core::vector3df &position=core::vector3df(0, 0, 0), 
+  //   const core::vector3df &rotation=core::vector3df(0, 0, 0), 
+  //   const core::vector3df &scale=core::vector3df(1.0f, 1.0f, 1.0f))=0
+  
   // add meshes
   if (mesh_cv.isNotNull()) {
     
@@ -234,9 +292,9 @@ bool plot_irr(
                  video::SColor(255,0,0,0));
     }
     // draw coordinate system axis
-    driver->draw3DLine(vector3df(-1000, 0, 0), vector3df(1000, 0, 0));
-    driver->draw3DLine(vector3df(0, -1000, 0), vector3df(0, 1000, 0));
-    driver->draw3DLine(vector3df(0, 0, -1000), vector3df(0, 0, 1000));
+    // driver->draw3DLine(vector3df(-1000, 0, 0), vector3df(1000, 0, 0));
+    // driver->draw3DLine(vector3df(0, -1000, 0), vector3df(0, 1000, 0));
+    // driver->draw3DLine(vector3df(0, 0, -1000), vector3df(0, 0, 1000));
     // draw nodes and gui
     scenemgr->drawAll();
     guienv->drawAll();
