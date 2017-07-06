@@ -7,6 +7,7 @@
 #' 
 #' @param points_df optional - data.frame with coordinates and attributes 
 #' of scattered points 
+#' @param raster_paths_cv troooeeeet
 #' @param mesh_cv floet
 #' @param doomhud fluet
 #' @param video_driver
@@ -29,12 +30,13 @@
 #'     y = rnorm(500)*200, 
 #'     z = rnorm(500)*200,
 #'     size = rnorm(500)*10 
-#'   )
+#'   ),
+#'   raster_paths_cv = c("data-raw/berries.png")
 #' )
 #' }
 #'
 #' @export
-plot_irr <- function(points_df = NULL, mesh_cv = NULL, doomhud = FALSE, video_driver = 'a') {
-    .Call('Rirrlicht_plot_irr', PACKAGE = 'Rirrlicht', points_df, mesh_cv, doomhud, video_driver)
+plot_irr <- function(points_df = NULL, raster_paths_cv = NULL, mesh_cv = NULL, doomhud = FALSE, video_driver = 'a') {
+    .Call('Rirrlicht_plot_irr', PACKAGE = 'Rirrlicht', points_df, raster_paths_cv, mesh_cv, doomhud, video_driver)
 }
 

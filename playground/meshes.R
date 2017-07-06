@@ -18,3 +18,9 @@ vertices <- c(
 indices <- c( 1, 2, 3, 4 )
 
 qmesh3d(vertices, indices) -> huup # %>% wire3d() 
+
+#### jpeg to string?
+
+library(raster)
+
+fnu <- raster("data-raw/berries.png")

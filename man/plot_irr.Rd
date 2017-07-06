@@ -4,12 +4,14 @@
 \alias{plot_irr}
 \title{Irrlicht 3D plot}
 \usage{
-plot_irr(points_df = NULL, mesh_cv = NULL, doomhud = FALSE,
-  video_driver = "a")
+plot_irr(points_df = NULL, raster_paths_cv = NULL, mesh_cv = NULL,
+  doomhud = FALSE, video_driver = "a")
 }
 \arguments{
 \item{points_df}{optional - data.frame with coordinates and attributes 
 of scattered points}
+
+\item{raster_paths_cv}{troooeeeet}
 
 \item{mesh_cv}{floet}
 
@@ -38,7 +40,8 @@ plot_irr(
     y = rnorm(500)*200, 
     z = rnorm(500)*200,
     size = rnorm(500)*10 
-  )
+  ),
+  raster_paths_cv = c("data-raw/berries.png")
 )
 }
 
