@@ -19,7 +19,7 @@ using namespace gui;
 //' @param points_df optional - data.frame with coordinates and attributes 
 //' of scattered points 
 //' @param raster_paths_cv troooeeeet
-//' @param raster_corners_df huuuup
+//' @param raster_corners_list huuuup
 //' @param mesh_cv floet
 //' @param doomhud fluet
 //' @param video_driver
@@ -52,7 +52,7 @@ using namespace gui;
 bool plot_irr(
   Nullable<DataFrame> points_df = R_NilValue,
   Nullable<CharacterVector> raster_paths_cv = R_NilValue,
-  Nullable<DataFrame> raster_corners_df = R_NilValue,
+  Nullable<DataFrame> raster_corners_list = R_NilValue,
   Nullable<CharacterVector> mesh_cv = R_NilValue,
   bool doomhud = false, 
   char video_driver = 'a'
@@ -134,44 +134,53 @@ bool plot_irr(
   // TODO?
   
   // add rasters
-  if (raster_paths_cv.isNotNull() && raster_corners_df.isNotNull()) {
+  if (raster_paths_cv.isNotNull() && raster_corners_list.isNotNull()) {
 
-    // prepare spatial reference
-    DataFrame rcdf = as<DataFrame>(raster_corners_df);
-    NumericVector position = position_calc(rcdf);
-    NumericVector normal = normal_calc(rcdf);
+    //TODO: check, if length if path cv and corners_list is identical
     
-    // prepare raster image
     CharacterVector raster_paths_cv_not_nullable = as<CharacterVector>(raster_paths_cv);
-    std::string blubb = Rcpp::as<std::string>(raster_paths_cv_not_nullable[0]);
-    core::string<fschar_t> blubb2 = blubb.c_str();
+    List raster_corners_list_not_nullable = as<List>(raster_corners_list);
     
-    // add raster to scene
-    scene::ISceneNode * picturenode = scenemgr->addCubeSceneNode();
-    
-    if (picturenode) {
-      // position: mean of coordinates
-      picturenode->setPosition(core::vector3df(
-        position(0),
-        position(1),
-        position(2)
-      ));
-      // rotation
-      picturenode->setRotation(core::vector3df(
-        normal(0), 
-        normal(1), 
-        normal(2)
-      ));
-      // scale
-      picturenode->setScale(core::vector3df(
-        10, 0.1, 10
-      ));
-      // texture
-      picturenode->setMaterialTexture(0, driver->getTexture(
-        blubb2
-      ));
-      // light (off)
-      picturenode->setMaterialFlag(video::EMF_LIGHTING, false);
+    for(int i = 0; i<2; i++) {
+      
+      // prepare spatial reference
+      SEXP rcdf_sexp = raster_corners_list_not_nullable[i];
+      DataFrame rcdf = as<DataFrame>(rcdf_sexp);
+      
+      NumericVector position = position_calc(rcdf);
+      NumericVector normal = normal_calc(rcdf);
+      
+      // prepare raster image
+      std::string blubb = as<std::string>(raster_paths_cv_not_nullable[i]);
+      core::string<fschar_t> blubb2 = blubb.c_str();
+      
+      // add raster to scene
+      scene::ISceneNode * picturenode = scenemgr->addCubeSceneNode();
+      
+      if (picturenode) {
+        // position: mean of coordinates
+        picturenode->setPosition(core::vector3df(
+          position(0),
+          position(1),
+          position(2)
+        ));
+        // rotation
+        picturenode->setRotation(core::vector3df(
+          normal(0),
+          normal(1),
+          normal(2)
+        ));
+        // scale
+        picturenode->setScale(core::vector3df(
+          10, 0.1, 10
+        ));
+        // texture
+        picturenode->setMaterialTexture(0, driver->getTexture(
+          blubb2
+        ));
+        // light (off)
+        picturenode->setMaterialFlag(video::EMF_LIGHTING, false);
+      }
     }
   }
   

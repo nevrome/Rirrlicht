@@ -32,7 +32,7 @@ normal_calc <- function(corner_points) {
 #' @param points_df optional - data.frame with coordinates and attributes 
 #' of scattered points 
 #' @param raster_paths_cv troooeeeet
-#' @param raster_corners_df huuuup
+#' @param raster_corners_list huuuup
 #' @param mesh_cv floet
 #' @param doomhud fluet
 #' @param video_driver
@@ -61,7 +61,7 @@ normal_calc <- function(corner_points) {
 #' }
 #'
 #' @export
-plot_irr <- function(points_df = NULL, raster_paths_cv = NULL, raster_corners_df = NULL, mesh_cv = NULL, doomhud = FALSE, video_driver = 'a') {
-    .Call('Rirrlicht_plot_irr', PACKAGE = 'Rirrlicht', points_df, raster_paths_cv, raster_corners_df, mesh_cv, doomhud, video_driver)
+plot_irr <- function(points_df = NULL, raster_paths_cv = NULL, raster_corners_list = NULL, mesh_cv = NULL, doomhud = FALSE, video_driver = 'a') {
+    .Call('Rirrlicht_plot_irr', PACKAGE = 'Rirrlicht', points_df, raster_paths_cv, raster_corners_list, mesh_cv, doomhud, video_driver)
 }
 

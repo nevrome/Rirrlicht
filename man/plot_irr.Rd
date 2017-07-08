@@ -5,7 +5,7 @@
 \title{Irrlicht 3D plot}
 \usage{
 plot_irr(points_df = NULL, raster_paths_cv = NULL,
-  raster_corners_df = NULL, mesh_cv = NULL, doomhud = FALSE,
+  raster_corners_list = NULL, mesh_cv = NULL, doomhud = FALSE,
   video_driver = "a")
 }
 \arguments{
@@ -14,7 +14,7 @@ of scattered points}
 
 \item{raster_paths_cv}{troooeeeet}
 
-\item{raster_corners_df}{huuuup}
+\item{raster_corners_list}{huuuup}
 
 \item{mesh_cv}{floet}
 

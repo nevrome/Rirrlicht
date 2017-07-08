@@ -62,5 +62,9 @@ NumericVector normal_calc(DataFrame corner_points) {
     v1(0)*v2(1) - v2(0)*v1(1)
   );
   
+  // Rcout << normal(0) << std::endl;
+  // Rcout << normal(1) << std::endl;
+  // Rcout << normal(2) << std::endl;
+  
   return normal;  
 }
