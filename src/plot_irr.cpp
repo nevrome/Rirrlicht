@@ -131,18 +131,22 @@ bool plot_irr(
   
   // add lines
   
-  // add rasters
+  // TODO?
   
+  // add rasters
   if (raster_paths_cv.isNotNull() && raster_corners_df.isNotNull()) {
 
+    // prepare spatial reference
     DataFrame rcdf = as<DataFrame>(raster_corners_df);
     NumericVector position = position_calc(rcdf);
     NumericVector normal = normal_calc(rcdf);
     
+    // prepare raster image
     CharacterVector raster_paths_cv_not_nullable = as<CharacterVector>(raster_paths_cv);
     std::string blubb = Rcpp::as<std::string>(raster_paths_cv_not_nullable[0]);
     core::string<fschar_t> blubb2 = blubb.c_str();
     
+    // add raster to scene
     scene::ISceneNode * picturenode = scenemgr->addCubeSceneNode();
     
     if (picturenode) {
@@ -154,18 +158,19 @@ bool plot_irr(
       ));
       // rotation
       picturenode->setRotation(core::vector3df(
-          normal(0), 
-          normal(1), 
-          normal(2)
+        normal(0), 
+        normal(1), 
+        normal(2)
       ));
+      // scale
       picturenode->setScale(core::vector3df(
-          10, 0.1, 10
+        10, 0.1, 10
       ));
-      
+      // texture
       picturenode->setMaterialTexture(0, driver->getTexture(
-          blubb2
+        blubb2
       ));
-
+      // light (off)
       picturenode->setMaterialFlag(video::EMF_LIGHTING, false);
     }
   }
