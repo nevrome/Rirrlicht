@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <unistd.h>
 #include "event_receiver.h"
+#include "normal_calc.h"
 
 using namespace Rcpp;
 using namespace irr;
@@ -134,37 +135,11 @@ bool plot_irr(
   
   if (raster_paths_cv.isNotNull() && raster_corners_df.isNotNull()) {
 
-    DataFrame raster_corners_df_not_nullable = as<DataFrame>(raster_corners_df);
-    
-    NumericVector xras = raster_corners_df_not_nullable["x"];
-    NumericVector yras = raster_corners_df_not_nullable["y"];
-    NumericVector zras = raster_corners_df_not_nullable["z"];
-     
-    // NumericVector xras = NumericVector::create(100.0, 100.0, 500.0, 500.0 );
-    // NumericVector yras = NumericVector::create(10.0, 0.0, 0.0, 10.0 );
-    // NumericVector zras = NumericVector::create(100.0, 500.0, 100.0, 500.0 );
-    
-    NumericVector vertex1 = NumericVector::create(
-      xras(0), yras(0), zras(0)
-    );
-    
-    NumericVector vertex2 = NumericVector::create(
-      xras(1), yras(1), zras(1)
-    );
-    
-    NumericVector vertex3 = NumericVector::create(
-      xras(2), yras(2), zras(2)
-    );
-    
-    NumericVector v1 = vertex2 - vertex1;
-    NumericVector v2 = vertex3 - vertex1;
-    
-    NumericVector normal = NumericVector::create(
-      v1(1)*v2(2) - v2(1)*v1(2),
-      v1(2)*v2(0) - v2(2)*v1(0),
-      v1(0)*v2(1) - v2(0)*v1(1)
-    );
-    
+    DataFrame rcdf = as<DataFrame>(raster_corners_df);
+    NumericVector xras = rcdf["x"];
+    NumericVector yras = rcdf["y"];
+    NumericVector zras = rcdf["z"];
+    NumericVector normal = normal_calc(rcdf);
     
     CharacterVector raster_paths_cv_not_nullable = as<CharacterVector>(raster_paths_cv);
     std::string blubb = Rcpp::as<std::string>(raster_paths_cv_not_nullable[0]);

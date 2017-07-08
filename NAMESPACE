@@ -2,6 +2,7 @@
 
 export(.onUnload)
 export(mesh2ply_string)
+export(normal_calc)
 export(plot_irr)
 importFrom(Rcpp,sourceCpp)
 importFrom(magrittr,"%>%")
