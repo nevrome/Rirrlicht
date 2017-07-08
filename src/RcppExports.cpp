@@ -6,23 +6,24 @@
 using namespace Rcpp;
 
 // plot_irr
-bool plot_irr(Nullable<DataFrame> points_df, Nullable<CharacterVector> raster_paths_cv, Nullable<CharacterVector> mesh_cv, bool doomhud, char video_driver);
-RcppExport SEXP Rirrlicht_plot_irr(SEXP points_dfSEXP, SEXP raster_paths_cvSEXP, SEXP mesh_cvSEXP, SEXP doomhudSEXP, SEXP video_driverSEXP) {
+bool plot_irr(Nullable<DataFrame> points_df, Nullable<CharacterVector> raster_paths_cv, Nullable<DataFrame> raster_corners_df, Nullable<CharacterVector> mesh_cv, bool doomhud, char video_driver);
+RcppExport SEXP Rirrlicht_plot_irr(SEXP points_dfSEXP, SEXP raster_paths_cvSEXP, SEXP raster_corners_dfSEXP, SEXP mesh_cvSEXP, SEXP doomhudSEXP, SEXP video_driverSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Nullable<DataFrame> >::type points_df(points_dfSEXP);
     Rcpp::traits::input_parameter< Nullable<CharacterVector> >::type raster_paths_cv(raster_paths_cvSEXP);
+    Rcpp::traits::input_parameter< Nullable<DataFrame> >::type raster_corners_df(raster_corners_dfSEXP);
     Rcpp::traits::input_parameter< Nullable<CharacterVector> >::type mesh_cv(mesh_cvSEXP);
     Rcpp::traits::input_parameter< bool >::type doomhud(doomhudSEXP);
     Rcpp::traits::input_parameter< char >::type video_driver(video_driverSEXP);
-    rcpp_result_gen = Rcpp::wrap(plot_irr(points_df, raster_paths_cv, mesh_cv, doomhud, video_driver));
+    rcpp_result_gen = Rcpp::wrap(plot_irr(points_df, raster_paths_cv, raster_corners_df, mesh_cv, doomhud, video_driver));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"Rirrlicht_plot_irr", (DL_FUNC) &Rirrlicht_plot_irr, 5},
+    {"Rirrlicht_plot_irr", (DL_FUNC) &Rirrlicht_plot_irr, 6},
     {NULL, NULL, 0}
 };
 

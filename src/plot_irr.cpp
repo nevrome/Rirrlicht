@@ -18,6 +18,7 @@ using namespace gui;
 //' @param points_df optional - data.frame with coordinates and attributes 
 //' of scattered points 
 //' @param raster_paths_cv troooeeeet
+//' @param raster_corners_df huuuup
 //' @param mesh_cv floet
 //' @param doomhud fluet
 //' @param video_driver
@@ -50,6 +51,7 @@ using namespace gui;
 bool plot_irr(
   Nullable<DataFrame> points_df = R_NilValue,
   Nullable<CharacterVector> raster_paths_cv = R_NilValue,
+  Nullable<DataFrame> raster_corners_df = R_NilValue,
   Nullable<CharacterVector> mesh_cv = R_NilValue,
   bool doomhud = false, 
   char video_driver = 'a'
@@ -130,16 +132,17 @@ bool plot_irr(
   
   // add rasters
   
-  if (raster_paths_cv.isNotNull()) {
-    // ITexture* images = driver->getTexture("data/berries.png");
-    // 
-    // //guienv->addImage(images, position2d<int>(10,10));
+  if (raster_paths_cv.isNotNull() && raster_corners_df.isNotNull()) {
+
+    DataFrame raster_corners_df_not_nullable = as<DataFrame>(raster_corners_df);
     
-    NumericVector xras = NumericVector::create(100.0, 100.0, 500.0, 500.0 );
-    NumericVector yras = NumericVector::create(10.0, 0.0, 0.0, 10.0 );
-    NumericVector zras = NumericVector::create(100.0, 500.0, 100.0, 500.0 );
-    
-    //DataFrame df = DataFrame::create( _["v1"] = v1 , _["V2"] = v2 );
+    NumericVector xras = raster_corners_df_not_nullable["x"];
+    NumericVector yras = raster_corners_df_not_nullable["y"];
+    NumericVector zras = raster_corners_df_not_nullable["z"];
+     
+    // NumericVector xras = NumericVector::create(100.0, 100.0, 500.0, 500.0 );
+    // NumericVector yras = NumericVector::create(10.0, 0.0, 0.0, 10.0 );
+    // NumericVector zras = NumericVector::create(100.0, 500.0, 100.0, 500.0 );
     
     NumericVector vertex1 = NumericVector::create(
       xras(0), yras(0), zras(0)
