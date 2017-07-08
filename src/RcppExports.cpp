@@ -5,6 +5,17 @@
 
 using namespace Rcpp;
 
+// position_calc
+NumericVector position_calc(DataFrame corner_points);
+RcppExport SEXP Rirrlicht_position_calc(SEXP corner_pointsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< DataFrame >::type corner_points(corner_pointsSEXP);
+    rcpp_result_gen = Rcpp::wrap(position_calc(corner_points));
+    return rcpp_result_gen;
+END_RCPP
+}
 // normal_calc
 NumericVector normal_calc(DataFrame corner_points);
 RcppExport SEXP Rirrlicht_normal_calc(SEXP corner_pointsSEXP) {
@@ -34,6 +45,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"Rirrlicht_position_calc", (DL_FUNC) &Rirrlicht_position_calc, 1},
     {"Rirrlicht_normal_calc", (DL_FUNC) &Rirrlicht_normal_calc, 1},
     {"Rirrlicht_plot_irr", (DL_FUNC) &Rirrlicht_plot_irr, 6},
     {NULL, NULL, 0}

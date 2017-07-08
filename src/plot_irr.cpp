@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <unistd.h>
 #include "event_receiver.h"
-#include "normal_calc.h"
+#include "geom_vector_calc.h"
 
 using namespace Rcpp;
 using namespace irr;
@@ -136,9 +136,7 @@ bool plot_irr(
   if (raster_paths_cv.isNotNull() && raster_corners_df.isNotNull()) {
 
     DataFrame rcdf = as<DataFrame>(raster_corners_df);
-    NumericVector xras = rcdf["x"];
-    NumericVector yras = rcdf["y"];
-    NumericVector zras = rcdf["z"];
+    NumericVector position = position_calc(rcdf);
     NumericVector normal = normal_calc(rcdf);
     
     CharacterVector raster_paths_cv_not_nullable = as<CharacterVector>(raster_paths_cv);
@@ -150,9 +148,9 @@ bool plot_irr(
     if (picturenode) {
       // position: mean of coordinates
       picturenode->setPosition(core::vector3df(
-        (xras(0) + xras(3)) / 2,
-        (yras(0) + yras(3)) / 2,
-        (zras(0) + zras(3)) / 2
+        position(0),
+        position(1),
+        position(2)
       ));
       // rotation
       picturenode->setRotation(core::vector3df(

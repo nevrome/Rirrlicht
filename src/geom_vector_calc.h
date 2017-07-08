@@ -2,6 +2,30 @@
 
 using namespace Rcpp;
 
+//' position
+//' 
+//' @description
+//' huhu
+//'  
+//' @param corner_points huhu
+//' 
+//' @export
+// [[Rcpp::export]]
+NumericVector position_calc(DataFrame corner_points) {
+  
+  NumericVector xras = corner_points["x"];
+  NumericVector yras = corner_points["y"];
+  NumericVector zras = corner_points["z"];
+  
+  NumericVector position = NumericVector::create(
+    (xras(0) + xras(3)) / 2,
+    (yras(0) + yras(3)) / 2,
+    (zras(0) + zras(3)) / 2
+  );
+  
+  return position;  
+}
+
 //' normal
 //' 
 //' @description
