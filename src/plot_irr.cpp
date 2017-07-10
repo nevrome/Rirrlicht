@@ -153,6 +153,8 @@ bool plot_irr(
       vector3df position = position_calc(rcdf);
       vector3df normal = normal_calc(rcdf);
       
+      vector3df angles = (normal.normalize()).getSphericalCoordinateAngles();
+      
       // prepare raster image
       std::string blubb = as<std::string>(raster_paths_cv_not_nullable[i]);
       core::string<fschar_t> blubb2 = blubb.c_str();
@@ -163,21 +165,8 @@ bool plot_irr(
       if (picturenode) {
         // position: mean of coordinates
         picturenode->setPosition(position);
-        
-        double a;
-        if(i == 0){a = 0;}else{a = 90;}
-        double b; 
-        if(i == 0){b = 0;}else{b = 45;}
-        double c; 
-        if(i == 0){c = 0;}else{c = 90;}
-        
         //rotation
-        picturenode->setRotation(core::vector3df(
-          a,b,c
-          // normal(0),
-          // normal(1),
-          // normal(2)
-        ));
+        picturenode->setRotation(angles);
         //scale
         picturenode->setScale(core::vector3df(
           10, 0.1, 10
