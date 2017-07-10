@@ -5,10 +5,10 @@ images <- c("data-raw/berries.png", "data-raw/berries.png")
 
 images_corners1 <- tribble(
   ~x, ~y, ~z,
-  5,5,5,
-  5,5,10,
-  10,5,10,
-  10,5,5
+  0,0,0,
+  0,1,0,
+  1,1,0,
+  1,0,0
 ) %>% as.data.frame()
 
 images_corners2 <- tribble(

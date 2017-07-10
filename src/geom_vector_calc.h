@@ -1,4 +1,5 @@
 #include <Rcpp.h>
+#include <irrlicht.h>
 
 using namespace Rcpp;
 
@@ -9,9 +10,7 @@ using namespace Rcpp;
 //'  
 //' @param corner_points huhu
 //' 
-//' @export
-// [[Rcpp::export]]
-NumericVector position_calc(DataFrame corner_points) {
+core::vector3df position_calc(DataFrame corner_points) {
   
   NumericVector xras = corner_points["x"];
   NumericVector yras = corner_points["y"];
@@ -23,7 +22,13 @@ NumericVector position_calc(DataFrame corner_points) {
     (zras(0) + zras(3)) / 2
   );
   
-  return position;  
+  core::vector3df pos(
+    position(0),
+    position(1),
+    position(2)
+  );
+  
+  return pos;  
 }
 
 //' normal
@@ -33,9 +38,7 @@ NumericVector position_calc(DataFrame corner_points) {
 //'  
 //' @param corner_points huhu
 //' 
-//' @export
-// [[Rcpp::export]]
-NumericVector normal_calc(DataFrame corner_points) {
+core::vector3df normal_calc(DataFrame corner_points) {
   
   NumericVector xras = corner_points["x"];
   NumericVector yras = corner_points["y"];
@@ -62,9 +65,11 @@ NumericVector normal_calc(DataFrame corner_points) {
     v1(0)*v2(1) - v2(0)*v1(1)
   );
   
-  // Rcout << normal(0) << std::endl;
-  // Rcout << normal(1) << std::endl;
-  // Rcout << normal(2) << std::endl;
+  core::vector3df norm(
+    normal(0),
+    normal(1),
+    normal(2)
+  );
   
-  return normal;  
+  return norm;  
 }

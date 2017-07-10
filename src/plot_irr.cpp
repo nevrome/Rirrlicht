@@ -138,17 +138,20 @@ bool plot_irr(
 
     //TODO: check, if length if path cv and corners_list is identical
     
+    // transform input to not nullable
     CharacterVector raster_paths_cv_not_nullable = as<CharacterVector>(raster_paths_cv);
     List raster_corners_list_not_nullable = as<List>(raster_corners_list);
     
+    // loop to deal with every picture
     for(int i = 0; i<2; i++) {
       
-      // prepare spatial reference
+      // extract DataFrames with corner positions from List
       SEXP rcdf_sexp = raster_corners_list_not_nullable[i];
       DataFrame rcdf = as<DataFrame>(rcdf_sexp);
       
-      NumericVector position = position_calc(rcdf);
-      NumericVector normal = normal_calc(rcdf);
+      // calc position and normal vector
+      vector3df position = position_calc(rcdf);
+      vector3df normal = normal_calc(rcdf);
       
       // prepare raster image
       std::string blubb = as<std::string>(raster_paths_cv_not_nullable[i]);
@@ -159,18 +162,23 @@ bool plot_irr(
       
       if (picturenode) {
         // position: mean of coordinates
-        picturenode->setPosition(core::vector3df(
-          position(0),
-          position(1),
-          position(2)
-        ));
-        // rotation
+        picturenode->setPosition(position);
+        
+        double a;
+        if(i == 0){a = 0;}else{a = 90;}
+        double b; 
+        if(i == 0){b = 0;}else{b = 45;}
+        double c; 
+        if(i == 0){c = 0;}else{c = 90;}
+        
+        //rotation
         picturenode->setRotation(core::vector3df(
-          normal(0),
-          normal(1),
-          normal(2)
+          a,b,c
+          // normal(0),
+          // normal(1),
+          // normal(2)
         ));
-        // scale
+        //scale
         picturenode->setScale(core::vector3df(
           10, 0.1, 10
         ));
