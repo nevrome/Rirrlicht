@@ -22,6 +22,8 @@ core::vector3df position_calc(DataFrame corner_points) {
     (zras(0) + zras(3)) / 2
   );
   
+  Rcout << pos.X << ", " << pos.Y << ", " << pos.Z << std::endl;;
+  
   return pos;  
 }
 
@@ -58,6 +60,8 @@ core::vector3df normal_calc(DataFrame corner_points) {
     v1(2)*v2(0) - v2(2)*v1(0),
     v1(0)*v2(1) - v2(0)*v1(1)
   );
+  
+  Rcout << norm.X << ", " << norm.Y << ", " << norm.Z << std::endl;;
   
   return norm;  
 }

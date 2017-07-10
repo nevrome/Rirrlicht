@@ -162,22 +162,18 @@ bool plot_irr(
       // add raster to scene
       scene::ISceneNode * picturenode = scenemgr->addCubeSceneNode();
       
-      if (picturenode) {
+      //if (picturenode) {
         // position: mean of coordinates
         picturenode->setPosition(position);
         //rotation
         picturenode->setRotation(angles);
         //scale
-        picturenode->setScale(core::vector3df(
-          10, 0.1, 10
-        ));
+        picturenode->setScale(core::vector3df(1, 0.001, 1));
         // texture
-        picturenode->setMaterialTexture(0, driver->getTexture(
-          blubb2
-        ));
+        picturenode->setMaterialTexture(0, driver->getTexture(blubb2));
         // light (off)
         picturenode->setMaterialFlag(video::EMF_LIGHTING, false);
-      }
+      //}
     }
   }
   
@@ -268,7 +264,7 @@ bool plot_irr(
   keyMap[7].KeyCode = KEY_KEY_D;
   
   ICameraSceneNode *camera = scenemgr->addCameraSceneNodeFPS(
-    0, 100.0f, 0.5f, -1, keyMap, 8
+    0, 100.0f, 0.01f, -1, keyMap, 8
   );
 
   // global light
@@ -285,9 +281,9 @@ bool plot_irr(
                  video::SColor(255,0,0,0));
     }
     // draw coordinate system axis
-    // driver->draw3DLine(vector3df(-1000, 0, 0), vector3df(1000, 0, 0));
-    // driver->draw3DLine(vector3df(0, -1000, 0), vector3df(0, 1000, 0));
-    // driver->draw3DLine(vector3df(0, 0, -1000), vector3df(0, 0, 1000));
+    driver->draw3DLine(vector3df(-1000, 0, 0), vector3df(1000, 0, 0), SColor(255, 0, 0, 255)); //rot
+    driver->draw3DLine(vector3df(0, -1000, 0), vector3df(0, 1000, 0), SColor(0, 255, 0, 255)); //grün
+    driver->draw3DLine(vector3df(0, 0, -1000), vector3df(0, 0, 1000), SColor(0, 0, 255, 255)); //blau
     // draw nodes and gui
     scenemgr->drawAll();
     guienv->drawAll();
