@@ -143,7 +143,7 @@ bool plot_irr(
     List raster_corners_list_not_nullable = as<List>(raster_corners_list);
     
     // loop to deal with every picture
-    for(int i = 0; i<2; i++) {
+    for(int i = 0; i < raster_paths_cv_not_nullable.size(); i++) {
       
       // extract DataFrames with corner positions from List
       SEXP rcdf_sexp = raster_corners_list_not_nullable[i];
@@ -152,8 +152,7 @@ bool plot_irr(
       // calc position and normal vector
       vector3df position = position_calc(rcdf);
       vector3df normal = normal_calc(rcdf);
-      
-      vector3df angles = (normal.normalize()).getSphericalCoordinateAngles();
+      vector3df degrees = rotation_calc(rcdf);
       
       // prepare raster image
       std::string blubb = as<std::string>(raster_paths_cv_not_nullable[i]);
@@ -166,9 +165,9 @@ bool plot_irr(
         // position: mean of coordinates
         picturenode->setPosition(position);
         //rotation
-        picturenode->setRotation(angles);
+        picturenode->setRotation(degrees);
         //scale
-        picturenode->setScale(core::vector3df(1, 0.001, 1));
+        picturenode->setScale(core::vector3df(1, 1, 0));
         // texture
         picturenode->setMaterialTexture(0, driver->getTexture(blubb2));
         // light (off)
