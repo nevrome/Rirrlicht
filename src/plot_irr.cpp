@@ -154,16 +154,22 @@ bool plot_irr(
       NumericVector y = rcdf["y"];
       NumericVector z = rcdf["z"];
       
-      for (int i = 0; i < x.size(); i++) {
+      for (int u = 0; u < x.size(); u++) {
         scenemgr->
-          addSphereSceneNode(0.3, 16, 0, -1, core::vector3df(x(i),y(i),z(i)));
+          addSphereSceneNode(0.3, 16, 0, -1, core::vector3df(x(u),y(u),z(u)));
       }
       
       // calc position and normal vector
       vector3df position = position_calc(rcdf);
       vector3df normal = normal_calc(rcdf);
-      vector3df degrees = rotation_calc(rcdf);
+      
+      // scenemgr->
+      //   addSphereSceneNode(0.3, 16, 0, -1, core::vector3df(-18, -15, 0));
+      
       vector3df scale = scale_calc(rcdf);
+      vector3df degrees = rotation_calc(move_rcdf_to_origin(rcdf));
+      
+      Rcout << std::endl;
       
       // prepare raster image
       std::string blubb = as<std::string>(raster_paths_cv_not_nullable[i]);
@@ -175,11 +181,11 @@ bool plot_irr(
       //if (picturenode) {
         // position: mean of coordinates
         picturenode->setPosition(position);
-        //rotation
-        picturenode->setRotation(degrees);
         //scale
         //picturenode->setScale(core::vector3df(0.5, 1, 0));
         picturenode->setScale(core::vector3df(scale));
+        //rotation
+        picturenode->setRotation(degrees);
         // texture
         picturenode->setMaterialTexture(0, driver->getTexture(blubb2));
         // light (off)
