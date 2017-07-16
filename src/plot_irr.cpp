@@ -149,6 +149,16 @@ bool plot_irr(
       SEXP rcdf_sexp = raster_corners_list_not_nullable[i];
       DataFrame rcdf = as<DataFrame>(rcdf_sexp);
       
+      // plot corner points
+      NumericVector x = rcdf["x"];
+      NumericVector y = rcdf["y"];
+      NumericVector z = rcdf["z"];
+      
+      for (int i = 0; i < x.size(); i++) {
+        scenemgr->
+          addSphereSceneNode(0.3, 16, 0, -1, core::vector3df(x(i),y(i),z(i)));
+      }
+      
       // calc position and normal vector
       vector3df position = position_calc(rcdf);
       vector3df normal = normal_calc(rcdf);
@@ -229,14 +239,14 @@ bool plot_irr(
   // define font
   gui::IGUIFont* font = plotdevice->getGUIEnvironment()->getBuiltInFont();
     
-  // coordinate system text
+  //coordinate system text
   // scene::IBillboardTextSceneNode* bill = 0;
   // bill = scenemgr->addBillboardTextSceneNode(
   //   font, L"0|0|0",
   //   node, dimension2d<f32>(200, 50),
   //   vector3df(100,100,100)
   // );
-  //bill->setTextColor(video::SColor(255,0,0,0));
+  // bill->setTextColor(video::SColor(255,0,0,0));
   
   // add a first person shooter style user controlled camera
   // Key map added to allow multiple keys for actions such as
@@ -280,9 +290,9 @@ bool plot_irr(
                  video::SColor(255,0,0,0));
     }
     // draw coordinate system axis
-    driver->draw3DLine(vector3df(-1000, 0, 0), vector3df(1000, 0, 0), SColor(255, 0, 0, 255)); //rot
-    driver->draw3DLine(vector3df(0, -1000, 0), vector3df(0, 1000, 0), SColor(0, 255, 0, 255)); //grün
-    driver->draw3DLine(vector3df(0, 0, -1000), vector3df(0, 0, 1000), SColor(0, 0, 255, 255)); //blau
+    // driver->draw3DLine(vector3df(-1000, 0, 0), vector3df(1000, 0, 0), SColor(255, 0, 0, 255)); //rot
+    // driver->draw3DLine(vector3df(0, -1000, 0), vector3df(0, 1000, 0), SColor(0, 255, 0, 255)); //grün
+    // driver->draw3DLine(vector3df(0, 0, -1000), vector3df(0, 0, 1000), SColor(0, 0, 255, 255)); //blau
     // draw nodes and gui
     scenemgr->drawAll();
     guienv->drawAll();

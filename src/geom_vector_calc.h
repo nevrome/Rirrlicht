@@ -12,14 +12,14 @@ using namespace Rcpp;
 //' 
 core::vector3df position_calc(DataFrame corner_points) {
   
-  NumericVector xras = corner_points["x"];
-  NumericVector yras = corner_points["y"];
-  NumericVector zras = corner_points["z"];
+  NumericVector x = corner_points["x"];
+  NumericVector y = corner_points["y"];
+  NumericVector z = corner_points["z"];
   
   core::vector3df pos(
-    (xras(0) + xras(3)) / 2,
-    (yras(0) + yras(3)) / 2,
-    (zras(0) + zras(3)) / 2
+    sum(x) / 4,
+    sum(y) / 4,
+    sum(z) / 4
   );
   
   Rcout << "position: " <<  pos.X << ", " << pos.Y << ", " << pos.Z << std::endl;;
@@ -36,20 +36,20 @@ core::vector3df position_calc(DataFrame corner_points) {
 //' 
 core::vector3df normal_calc(DataFrame corner_points) {
   
-  NumericVector xras = corner_points["x"];
-  NumericVector yras = corner_points["y"];
-  NumericVector zras = corner_points["z"];
+  NumericVector x = corner_points["x"];
+  NumericVector y = corner_points["y"];
+  NumericVector z = corner_points["z"];
   
   NumericVector vertex1 = NumericVector::create(
-    xras(0), yras(0), zras(0)
+    x(0), y(0), z(0)
   );
   
   NumericVector vertex2 = NumericVector::create(
-    xras(1), yras(1), zras(1)
+    x(1), y(1), z(1)
   );
   
   NumericVector vertex3 = NumericVector::create(
-    xras(2), yras(2), zras(2)
+    x(2), y(2), z(2)
   );
   
   NumericVector v1 = vertex2 - vertex1;
@@ -73,9 +73,9 @@ core::vector3df normal_calc(DataFrame corner_points) {
 // https://stackoverflow.com/questions/45052226/
 core::vector3df rotation_calc(DataFrame corner_points) {
   
-  NumericVector xras = corner_points["x"];
-  NumericVector yras = corner_points["y"];
-  NumericVector zras = corner_points["z"];
+  NumericVector x = corner_points["x"];
+  NumericVector y = corner_points["y"];
+  NumericVector z = corner_points["z"];
   
   // Z-axis
   core::vector3df zaxis(
@@ -107,9 +107,9 @@ core::vector3df rotation_calc(DataFrame corner_points) {
   
   // calculate the rotation from U to the midpoint of DE => quaternion Q
   core::vector3df MDE(
-      (xras(0) + xras(1)) / 2,
-      (yras(0) + yras(1)) / 2,
-      (zras(0) + zras(1)) / 2
+      (x(0) + x(1)) / 2,
+      (y(0) + y(1)) / 2,
+      (z(0) + z(1)) / 2
   );
   
   core::quaternion q;
