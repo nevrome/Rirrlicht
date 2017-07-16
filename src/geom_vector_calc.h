@@ -8,13 +8,13 @@ using namespace Rcpp;
 //' @description
 //' huhu
 //'  
-//' @param corner_points huhu
+//' @param rcdf huhu
 //' 
-core::vector3df position_calc(DataFrame corner_points) {
+core::vector3df position_calc(DataFrame rcdf) {
   
-  NumericVector x = corner_points["x"];
-  NumericVector y = corner_points["y"];
-  NumericVector z = corner_points["z"];
+  NumericVector x = rcdf["x"];
+  NumericVector y = rcdf["y"];
+  NumericVector z = rcdf["z"];
   
   core::vector3df pos(
     sum(x) / 4,
@@ -27,11 +27,11 @@ core::vector3df position_calc(DataFrame corner_points) {
   return pos;  
 }
 
-core::vector3df scale_calc(DataFrame corner_points) {
+core::vector3df scale_calc(DataFrame rcdf) {
   
-  NumericVector x = corner_points["x"];
-  NumericVector y = corner_points["y"];
-  NumericVector z = corner_points["z"];
+  NumericVector x = rcdf["x"];
+  NumericVector y = rcdf["y"];
+  NumericVector z = rcdf["z"];
   
   core::vector3df lu(x(0), y(0), z(0));
   core::vector3df ru(x(1), y(1), z(1));
@@ -53,13 +53,13 @@ core::vector3df scale_calc(DataFrame corner_points) {
 //' @description
 //' huhu
 //'  
-//' @param corner_points huhu
+//' @param rcdf huhu
 //' 
-core::vector3df normal_calc(DataFrame corner_points) {
+core::vector3df normal_calc(DataFrame rcdf) {
   
-  NumericVector x = corner_points["x"];
-  NumericVector y = corner_points["y"];
-  NumericVector z = corner_points["z"];
+  NumericVector x = rcdf["x"];
+  NumericVector y = rcdf["y"];
+  NumericVector z = rcdf["z"];
   
   NumericVector vertex1 = NumericVector::create(
     x(0), y(0), z(0)
@@ -92,18 +92,16 @@ core::vector3df normal_calc(DataFrame corner_points) {
 }
 
 // https://stackoverflow.com/questions/45052226/
-core::vector3df rotation_calc(DataFrame corner_points) {
+core::vector3df rotation_calc(DataFrame rcdf) {
   
-  NumericVector x = corner_points["x"];
-  NumericVector y = corner_points["y"];
-  NumericVector z = corner_points["z"];
+  NumericVector x = rcdf["x"];
+  NumericVector y = rcdf["y"];
+  NumericVector z = rcdf["z"];
   
   // Z-axis
-  core::vector3df zaxis(
-      0, 0, 1
-  );
+  core::vector3df zaxis(0, 0, 1);
   // resulting image's normal
-  core::vector3df normal = normal_calc(corner_points);
+  core::vector3df normal = normal_calc(rcdf);
   
   // calculate the rotation from the original image's normal (i.e. the Z-axis) 
   // to the resulting image's normal => quaternion P.
@@ -112,19 +110,13 @@ core::vector3df rotation_calc(DataFrame corner_points) {
   
   // take the midpoint of AB from the diagram in method 1, and rotate it with 
   // the quaternion P => vector U.
-  core::vector3df MAB(
-      0, 0.5, 0
-  );
+  core::vector3df MAB(0, 0.5, 0);
   
-  core::quaternion m(
-      MAB.X, MAB.Y, MAB.Z, 0
-  );
+  core::quaternion m(MAB.X, MAB.Y, MAB.Z, 0);
   
   core::quaternion rot = p * m * p.makeInverse();
   
-  core::vector3df u(
-    rot.X, rot.Y, rot.Z
-  );
+  core::vector3df u(rot.X, rot.Y, rot.Z);
   
   // calculate the rotation from U to the midpoint of DE => quaternion Q
   core::vector3df MDE(
