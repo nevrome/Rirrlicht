@@ -163,6 +163,7 @@ bool plot_irr(
       vector3df position = position_calc(rcdf);
       vector3df normal = normal_calc(rcdf);
       vector3df degrees = rotation_calc(rcdf);
+      vector3df scale = scale_calc(rcdf);
       
       // prepare raster image
       std::string blubb = as<std::string>(raster_paths_cv_not_nullable[i]);
@@ -177,7 +178,8 @@ bool plot_irr(
         //rotation
         picturenode->setRotation(degrees);
         //scale
-        picturenode->setScale(core::vector3df(1, 1, 0));
+        //picturenode->setScale(core::vector3df(0.5, 1, 0));
+        picturenode->setScale(core::vector3df(scale));
         // texture
         picturenode->setMaterialTexture(0, driver->getTexture(blubb2));
         // light (off)

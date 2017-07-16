@@ -27,6 +27,27 @@ core::vector3df position_calc(DataFrame corner_points) {
   return pos;  
 }
 
+core::vector3df scale_calc(DataFrame corner_points) {
+  
+  NumericVector x = corner_points["x"];
+  NumericVector y = corner_points["y"];
+  NumericVector z = corner_points["z"];
+  
+  core::vector3df lu(x(0), y(0), z(0));
+  core::vector3df ru(x(1), y(1), z(1));
+  core::vector3df lo(x(3), y(3), z(3));
+  
+  core::vector3df scale(
+    lu.getDistanceFrom(ru),
+    lu.getDistanceFrom(lo),  
+    0
+  );
+  
+  Rcout << "scale: " <<  scale.X << ", " << scale.Y << ", " << scale.Z << std::endl;;
+  
+  return scale * 0.1;  
+}
+
 //' normal
 //' 
 //' @description
