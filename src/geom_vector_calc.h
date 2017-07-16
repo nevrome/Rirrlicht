@@ -1,5 +1,6 @@
 #include <Rcpp.h>
 #include <irrlicht.h>
+#include <math.h>
 
 using namespace Rcpp;
 
@@ -136,9 +137,9 @@ core::vector3df rotation_calc(DataFrame rcdf) {
   
   // to degrees
   core::vector3df degrees(
-    euler.X * (180.0/3.14),
-    euler.Y * (180.0/3.14),
-    euler.Z * (180.0/3.14)
+    euler.X * (180.0 / M_PI),
+    euler.Y * (180.0 / M_PI),
+    euler.Z * (180.0 / M_PI)
   );
   
   Rcout << "degrees: " <<  degrees.X << ", " << degrees.Y << ", " << degrees.Z << std::endl;
