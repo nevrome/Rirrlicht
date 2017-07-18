@@ -38,6 +38,6 @@
 #'
 #' @export
 plot_irr <- function(points_df = NULL, raster_paths_cv = NULL, raster_corners_list = NULL, mesh_cv = NULL, doomhud = FALSE, video_driver = 'a') {
-    .Call('Rirrlicht_plot_irr', PACKAGE = 'Rirrlicht', points_df, raster_paths_cv, raster_corners_list, mesh_cv, doomhud, video_driver)
+    .Call('_Rirrlicht_plot_irr', PACKAGE = 'Rirrlicht', points_df, raster_paths_cv, raster_corners_list, mesh_cv, doomhud, video_driver)
 }
 

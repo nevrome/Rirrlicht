@@ -7,7 +7,7 @@ using namespace Rcpp;
 
 // plot_irr
 bool plot_irr(Nullable<DataFrame> points_df, Nullable<CharacterVector> raster_paths_cv, Nullable<DataFrame> raster_corners_list, Nullable<CharacterVector> mesh_cv, bool doomhud, char video_driver);
-RcppExport SEXP Rirrlicht_plot_irr(SEXP points_dfSEXP, SEXP raster_paths_cvSEXP, SEXP raster_corners_listSEXP, SEXP mesh_cvSEXP, SEXP doomhudSEXP, SEXP video_driverSEXP) {
+RcppExport SEXP _Rirrlicht_plot_irr(SEXP points_dfSEXP, SEXP raster_paths_cvSEXP, SEXP raster_corners_listSEXP, SEXP mesh_cvSEXP, SEXP doomhudSEXP, SEXP video_driverSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -23,7 +23,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"Rirrlicht_plot_irr", (DL_FUNC) &Rirrlicht_plot_irr, 6},
+    {"_Rirrlicht_plot_irr", (DL_FUNC) &_Rirrlicht_plot_irr, 6},
     {NULL, NULL, 0}
 };
 
