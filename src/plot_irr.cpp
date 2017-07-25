@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <unistd.h>
 #include "event_receiver.h"
+#include "rect.h"
 #include "geom_vector_calc.h"
 
 using namespace Rcpp;
@@ -137,47 +138,78 @@ bool plot_irr(
   if (raster_paths_cv.isNotNull() && raster_corners_list.isNotNull()) {
 
     //TODO: check, if length if path cv and corners_list is identical
-    
+
     // transform input to not nullable
     CharacterVector raster_paths_cv_not_nullable = as<CharacterVector>(raster_paths_cv);
     List raster_corners_list_not_nullable = as<List>(raster_corners_list);
-    
+
     // loop to deal with every picture
     for(int i = 0; i < raster_paths_cv_not_nullable.size(); i++) {
-      
-      // extract DataFrames with corner positions from List
+
+      // extract DataFrames with corner positions from List -> ugly transformation
       SEXP rcdf_sexp = raster_corners_list_not_nullable[i];
       DataFrame rcdf = as<DataFrame>(rcdf_sexp);
-      
-      // plot corner points
       NumericVector x = rcdf["x"];
       NumericVector y = rcdf["y"];
       NumericVector z = rcdf["z"];
+      r12 rcdf2 = { 
+        (v3) {x[0], y[0], z[0]},
+        (v3) {x[1], y[1], z[1]},
+        (v3) {x[2], y[2], z[2]},
+        (v3) {x[3], y[3], z[3]}
+      };
       
+      // plot corner points
       for (int u = 0; u < x.size(); u++) {
         scenemgr->
           addSphereSceneNode(0.3, 16, 0, -1, core::vector3df(x(u),y(u),z(u)));
       }
+
+      q4 r = r_compute(rcdf2);
+      r12 next = r_add(r_get(r, r_width(rcdf2), r_height(rcdf2)), r_ctr(rcdf2));
       
-      // calc position and normal vector
+      printf("quaternion: "); printq(r); printf("\n\n");
+      
+      printf("normal: "); printv(r_normal(next)); printf("\n\n");
+      
+      printf("vertices:\n");
+      printv(next.p[0]); printf("\n");
+      printv(next.p[1]); printf("\n");
+      printv(next.p[2]); printf("\n");
+      printv(next.p[3]); printf("\n");
+      
+      // // calc position and normal vector
       vector3df position = position_calc(rcdf);
-      vector3df normal = normal_calc(rcdf);
-      
-      // scenemgr->
-      //   addSphereSceneNode(0.3, 16, 0, -1, core::vector3df(-18, -15, 0));
-      
+      // vector3df normal = normal_calc(rcdf);
+      // 
+      // // scenemgr->
+      // //   addSphereSceneNode(0.3, 16, 0, -1, core::vector3df(-18, -15, 0));
+      // 
       vector3df scale = scale_calc(rcdf);
-      vector3df degrees = rotation_calc(move_rcdf_to_origin(rcdf));
+      // vector3df degrees = rotation_calc(move_rcdf_to_origin(rcdf));
+
+      core::quaternion f(r.x, r.y, r.z, r.w);
+      core::vector3df euler;
+      f.toEuler(euler);
+      
+      // to degrees
+      core::vector3df degrees(
+          euler.X * (180.0 / M_PI),
+          euler.Y * (180.0 / M_PI),
+          euler.Z * (180.0 / M_PI)
+      );
+      
+      Rcout << "degrees: " <<  degrees.X << ", " << degrees.Y << ", " << degrees.Z << std::endl;
       
       Rcout << std::endl;
-      
+
       // prepare raster image
       std::string blubb = as<std::string>(raster_paths_cv_not_nullable[i]);
       core::string<fschar_t> blubb2 = blubb.c_str();
-      
+
       // add raster to scene
       scene::ISceneNode * picturenode = scenemgr->addCubeSceneNode();
-      
+
       //if (picturenode) {
         // position: mean of coordinates
         picturenode->setPosition(position);
