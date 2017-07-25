@@ -25,12 +25,11 @@ core::vector3df position_calc(DataFrame rcdf) {
     sum(z) / 4
   );
 
-  Rcout << "position: " <<  pos.X << ", " << pos.Y << ", " << pos.Z << std::endl;
+  Rcout << "Image position: " <<  pos.X << ", " << pos.Y << ", " << pos.Z << std::endl;
 
   return pos;
 }
 
-// 
 core::vector3df scale_calc(DataFrame rcdf) {
 
   NumericVector x = rcdf["x"];
@@ -47,7 +46,7 @@ core::vector3df scale_calc(DataFrame rcdf) {
     0
   );
 
-  Rcout << "scale: " <<  scale.X << ", " << scale.Y << ", " << scale.Z << std::endl;;
+  Rcout << "Image scale: " <<  scale.X << ", " << scale.Y << ", " << scale.Z << std::endl;;
 
   return scale * 0.1;
 }
@@ -64,7 +63,7 @@ vector3df rotation_calc(DataFrame rcdf) {
     (v3) {x[3], y[3], z[3]}
   };
   // check if r12 is valid (correct point order)
-  if (!r_valid(rcdf2)) { Rcpp::Rcout << "rcdf2 is not valid."; }
+  if (!r_valid(rcdf2)) { Rcpp::Rcout << "Corner coordinates of image are not valid. Rotation may be wrong." << std::endl ; }
   // subtract center offset
   rcdf2 = r_sub(rcdf2, r_ctr(rcdf2));
   // p quaternion (between normals)
@@ -87,7 +86,7 @@ vector3df rotation_calc(DataFrame rcdf) {
       euler.Z * (180.0 / M_PI)
   );
   
-  Rcout << "degrees: " <<  degrees.X << ", " << degrees.Y << ", " << degrees.Z << std::endl;
+  Rcout << "Image rotation degrees: " <<  degrees.X << ", " << degrees.Y << ", " << degrees.Z << std::endl;
   
   return degrees; // i swapped the order on this operation
 }
