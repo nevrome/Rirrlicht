@@ -32,20 +32,3 @@ r12 r_get(q4 r, double w, double h) {
 v3 r_ctr(r12 r) { return v_mul(v_add(r.p[0],v_add(r.p[1],v_add(r.p[2],r.p[3]))),0.25); }
 r12 r_add(r12 r, v3 a) { return (r12) {v_add(r.p[0],a),v_add(r.p[1],a),v_add(r.p[2],a),v_add(r.p[3],a)}; }
 r12 r_sub(r12 r, v3 a) { return (r12) {v_sub(r.p[0],a),v_sub(r.p[1],a),v_sub(r.p[2],a),v_sub(r.p[3],a)}; }
-
-
-// compute the rotation 
-q4 r_compute(r12 rcdf) {
-  if (!r_valid(rcdf)) { return (q4) { 0.0, 0.0, 0.0, 0.0 }; }
-  // subtract center offset
-  rcdf = r_sub(rcdf, r_ctr(rcdf));
-  // p quaternion (between normals)
-  q4 p = q_btw((v3) { 0.0, 0.0, 1.0 }, r_normal(rcdf));
-  // mid-point calculations
-  v3 mab = (v3) { 0.0, 1.0, 0.0 };
-  v3 u = q_rot(p, mab);
-  v3 mde = v_mul(v_add(rcdf.p[0],rcdf.p[3]), 0.5);
-  // q quaternion
-  q4 q = q_btw(mab, mde);
-  return q_mul(p, q); // i swapped the order on this operation
-}
