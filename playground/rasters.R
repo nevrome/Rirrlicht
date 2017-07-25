@@ -8,9 +8,9 @@ images <- c("data-raw/berries.png", "data-raw/berries.png", "data-raw/berries.pn
 images_corners1 <- tribble(
   ~x, ~y, ~z,
   0,0,0,
-  1,0,0,
-  1,0,1,
-  0,0,1
+  1,5,0,
+  1,5,2,
+  0,0,2
 ) %>% as.data.frame()
 
 # images_corners2 <- tribble(
@@ -25,8 +25,8 @@ images_corners3 <- tribble(
   ~x, ~y, ~z,
   0,0,0,
   3,0,0,
-  3,3,0,
-  0,3,0
+  3,5,5,
+  0,5,5
 ) %>% as.data.frame()
 
 images_corners2 <- tribble(
@@ -34,7 +34,7 @@ images_corners2 <- tribble(
   0,3,0,
   5,-3,0,
   5,-3,3,
-  0,3,3
+  0,3,3.01
 ) %>% as.data.frame()
 
 plot_irr(
