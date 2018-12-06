@@ -5,7 +5,7 @@
 Rirrlicht
 ---------
 
-R package to provide a plot API for the [Irrlicht engine](http://irrlicht.sourceforge.net/).
+R package to provide a plot API for the [Irrlicht engine](http://irrlicht.sourceforge.net/). Only a proof of concept.
 
 I'm not part of the Irrlicht Engine team -- this is just an API.
 
@@ -35,3 +35,5 @@ plot_irr(
   )
 )
 ``` 
+
+4. -- In the playground folder you can find example code on how to add raster images and meshes to the plot.
